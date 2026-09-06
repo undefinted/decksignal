@@ -1,0 +1,26 @@
+id: opb-education-003
+version: "0.1.0"
+track: prompt_to_deck
+scenario: education
+language: zh-CN
+title: 识别网络信息中的误导
+prompt: >-
+  为大学新生制作一份8页的媒体素养工作坊演示，主题是《如何识别网络信息中的误导》。包含一个虚构但明确
+  标注为虚构的案例，讲解来源核验、原始证据、标题与正文差异、相关性与因果性、图片反向搜索思路，以及
+  一个三人小组练习。不要引用真实且正在发生的政治事件。中文，互动性强。
+constraints:
+  slide_count_min: 8
+  slide_count_max: 8
+  audience: 大学新生
+  required_sections: [案例, 核验流程, 相关与因果, 图片核验, 小组练习, 总结]
+checks:
+  - id: fictional-label
+    question: 虚构案例是否被清楚标注为虚构？
+    weight: 3
+  - id: verification-process
+    question: 是否提供可执行的来源和证据核验步骤？
+    weight: 3
+  - id: group-exercise
+    question: 是否给出三人小组的明确分工或任务？
+    weight: 1
+

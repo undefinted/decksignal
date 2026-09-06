@@ -1,0 +1,27 @@
+id: opb-product-001
+version: "0.1.0"
+track: prompt_to_deck
+scenario: product
+language: zh-CN
+title: 个人记账应用发布介绍
+prompt: >-
+  为一款名为“清账”的个人记账应用制作8至9页产品发布演示，面向刚开始工作的年轻人。核心功能只有：
+  自动分类账单、月度预算提醒、多人旅行分账、本地加密导出。产品承诺不出售个人数据，但尚未提供银行账户
+  自动同步。请讲清用户问题、产品价值、四项功能、隐私边界、使用场景和行动号召。不得虚构用户数、融资额、
+  获奖或媒体评价。中文，轻松但可信。
+constraints:
+  slide_count_min: 8
+  slide_count_max: 9
+  audience: 刚开始工作的年轻人
+  required_sections: [用户问题, 产品价值, 功能, 隐私, 使用场景, 行动号召]
+checks:
+  - id: feature-boundary
+    question: 是否只介绍给定的四项功能，并明确尚不支持银行自动同步？
+    weight: 3
+  - id: privacy-boundary
+    question: 是否准确表达“不出售个人数据”而没有扩张为绝对安全承诺？
+    weight: 2
+  - id: no-social-proof
+    question: 是否没有虚构用户数、融资、奖项或媒体评价？
+    weight: 3
+

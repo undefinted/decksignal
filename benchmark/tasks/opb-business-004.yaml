@@ -1,0 +1,27 @@
+id: opb-business-004
+version: "0.1.0"
+track: prompt_to_deck
+scenario: business
+language: zh-CN
+title: 混合办公政策提案
+prompt: >-
+  为一家300人的软件公司制作一份8页的混合办公政策提案。已知员工调研中72%希望每周至少两天远程办公，
+  19%没有合适的家庭办公环境；过去一年新员工前三个月离职率为14%。请提出兼顾协作、公平、信息安全和
+  办公空间利用率的试点政策，明确试点范围、例外机制、衡量指标和复盘节点。面向CEO和人力资源负责人，
+  不得把调研相关性写成因果关系，中文、克制、专业。
+constraints:
+  slide_count_min: 8
+  slide_count_max: 8
+  audience: CEO和人力资源负责人
+  required_sections: [背景, 原则, 试点政策, 例外机制, 衡量指标, 风险, 复盘]
+checks:
+  - id: exact-eight
+    question: 是否严格生成8页？
+    weight: 2
+  - id: fairness
+    question: 是否处理无法居家办公员工的公平问题？
+    weight: 2
+  - id: causality
+    question: 是否避免声称混合办公必然降低新员工离职率？
+    weight: 3
+

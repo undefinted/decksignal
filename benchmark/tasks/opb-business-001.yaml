@@ -1,0 +1,28 @@
+id: opb-business-001
+version: "0.1.0"
+track: prompt_to_deck
+scenario: business
+language: zh-CN
+title: 第一季度新媒体运营复盘
+prompt: >-
+  请制作一份面向公司管理层的《2026年第一季度新媒体运营复盘》演示文稿，共8至10页。背景数据：
+  预算30万元，实际支出27万元；全平台粉丝由12万增长至16.8万；发布内容96条；总曝光1,860万；
+  互动量74万；收集销售线索3,200条，其中有效线索1,050条；上季度有效线索为820条。
+  请包含目标、核心结果、渠道表现、优秀案例、问题与原因，以及下一季度行动计划。禁止补造未提供的数据，
+  缺少的数据应明确标注。风格简洁、专业，以结论为标题，并使用中文。
+constraints:
+  slide_count_min: 8
+  slide_count_max: 10
+  audience: 公司管理层
+  required_sections: [目标, 核心结果, 渠道表现, 优秀案例, 问题与原因, 下一季度计划]
+checks:
+  - id: exact-metrics
+    question: 是否正确使用所有给定数字且未补造关键经营数据？
+    weight: 3
+  - id: derived-growth
+    question: 是否正确表达粉丝增长40%和有效线索环比约28%？
+    weight: 2
+  - id: management-conclusion
+    question: 是否用管理层可快速理解的结论组织页面？
+    weight: 2
+

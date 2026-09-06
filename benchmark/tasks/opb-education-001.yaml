@@ -1,0 +1,26 @@
+id: opb-education-001
+version: "0.1.0"
+track: prompt_to_deck
+scenario: education
+language: zh-CN
+title: 什么是大语言模型
+prompt: >-
+  为没有编程基础的高中生制作一份8至10页的《什么是大语言模型》科普演示。用生活化类比解释训练、
+  token、概率生成和上下文，但必须指出类比的局限。包含常见应用、幻觉、偏见、隐私风险和三条安全使用建议。
+  不使用复杂公式，不宣称模型具有人的意识。中文，清晰、友好，每页突出一个核心问题。
+constraints:
+  slide_count_min: 8
+  slide_count_max: 10
+  audience: 无编程基础的高中生
+  required_sections: [基本概念, 工作方式, 应用, 幻觉, 偏见, 隐私, 安全建议]
+checks:
+  - id: core-concepts
+    question: 是否通俗但基本准确地解释训练、token、概率生成和上下文？
+    weight: 3
+  - id: analogy-limit
+    question: 是否指出至少一个类比的局限？
+    weight: 2
+  - id: no-consciousness
+    question: 是否避免暗示模型拥有人类意识？
+    weight: 2
+

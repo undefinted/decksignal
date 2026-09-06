@@ -1,0 +1,67 @@
+version: "0.2.0-draft"
+capabilities:
+  content_grounding:
+    label_zh: 内容忠实度
+    weight: 0.16
+  narrative_structure:
+    label_zh: 叙事结构
+    weight: 0.12
+  visual_design:
+    label_zh: 视觉设计
+    weight: 0.14
+  instruction_following:
+    label_zh: 指令遵循
+    weight: 0.10
+  native_editability:
+    label_zh: 原生可编辑性
+    weight: 0.10
+  export_fidelity:
+    label_zh: 导出还原度
+    weight: 0.08
+  generation_reliability:
+    label_zh: 生成稳定性
+    weight: 0.08
+  editing_capability:
+    label_zh: 后续编辑能力
+    weight: 0.07
+  usability:
+    label_zh: 操作体验
+    weight: 0.06
+  accessibility:
+    label_zh: 无障碍表现
+    weight: 0.03
+  localization_zh:
+    label_zh: 中文本地化
+    weight: 0.04
+  value:
+    label_zh: 价格与价值
+    weight: 0.02
+leaderboards:
+  overall:
+    label_zh: 综合榜
+    capabilities: [content_grounding, narrative_structure, visual_design, instruction_following, native_editability, export_fidelity, generation_reliability, editing_capability, usability, accessibility, localization_zh, value]
+    minimum_coverage: 0.60
+    minimum_sources: 2
+    require_reproducible: true
+  chinese_business:
+    label_zh: 中文商务榜
+    capabilities: [content_grounding, narrative_structure, visual_design, instruction_following, native_editability, localization_zh]
+    minimum_coverage: 0.66
+    minimum_sources: 1
+    require_reproducible: true
+    filters:
+      scenario: business
+      language: zh-CN
+  native_pptx:
+    label_zh: 原生 PPTX 榜
+    capabilities: [native_editability, export_fidelity, editing_capability]
+    minimum_coverage: 0.66
+    minimum_sources: 1
+    require_reproducible: true
+  value:
+    label_zh: 性价比榜
+    capabilities: [value, usability, generation_reliability]
+    minimum_coverage: 0.66
+    minimum_sources: 1
+    require_reproducible: true
+

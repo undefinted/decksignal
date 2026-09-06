@@ -1,0 +1,38 @@
+name: Product monitoring
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: "17 2 * * *"
+
+jobs:
+  discover-and-check:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e .
+      - name: Discover GitHub candidates
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: >-
+          openpptbench discover-github
+          --query '"presentation generator" AI in:name,description,readme'
+          --query '"PowerPoint generator" LLM in:name,description,readme'
+          --query 'topic:ai-presentation'
+          --per-query 10
+          --output monitoring-output/discoveries.json
+      - name: Check registered product URLs
+        run: >-
+          openpptbench check-products data/products
+          --output monitoring-output/product-health.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: product-monitoring-${{ github.run_id }}
+          path: monitoring-output/
+          retention-days: 30
+

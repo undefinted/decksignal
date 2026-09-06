@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.2.0-draft",
+  "snapshot_id": "presenton__2026-09-06",
+  "product_id": "presenton",
+  "name": "Presenton",
+  "provider": "Presenton contributors",
+  "kind": "open_source_system",
+  "canonical_url": "https://github.com/presenton/presenton",
+  "observed_at": "2026-09-06T00:00:00Z",
+  "status": "queued",
+  "facts": {}
+}
+

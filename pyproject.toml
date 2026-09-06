@@ -1,0 +1,33 @@
+[build-system]
+requires = ["hatchling>=1.25"]
+build-backend = "hatchling.build"
+
+[project]
+name = "openpptbench"
+version = "0.2.0a1"
+description = "Continuous evaluation observatory and evidence-aware rankings for AI presentation tools"
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "Apache-2.0" }
+authors = [{ name = "OpenPPTBench Contributors" }]
+dependencies = [
+  "python-pptx>=1.0.2",
+  "PyYAML>=6.0.2",
+  "jsonschema>=4.23.0",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8.3", "ruff>=0.9"]
+
+[project.scripts]
+openpptbench = "openpptbench.cli:main"
+
+[tool.hatch.build.targets.wheel]
+packages = ["src/openpptbench"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+addopts = "--basetemp=.pytest-tmp"
+
+[tool.ruff]
+line-length = 100

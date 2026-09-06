@@ -1,0 +1,27 @@
+id: opb-product-003
+version: "0.1.0"
+track: prompt_to_deck
+scenario: product
+language: zh-CN
+title: 社区旧物交换服务概念提案
+prompt: >-
+  为社区物业和居民代表制作一份7至9页的“邻里旧物交换日”服务概念提案。活动设想：每月第一个周六举办，
+  居民可交换书籍、小家电、玩具和家居用品；禁止食品、药品、危险品和来源不明的电子设备。预算上限为每场
+  5,000元。请说明居民价值、活动流程、物品规则、场地与人员安排、预算框架、风险应对和试点反馈方式。
+  中文，亲切、可执行，不得虚构居民调研结果。
+constraints:
+  slide_count_min: 7
+  slide_count_max: 9
+  audience: 社区物业和居民代表
+  required_sections: [居民价值, 活动流程, 物品规则, 场地人员, 预算, 风险, 反馈]
+checks:
+  - id: prohibited-items
+    question: 是否完整列出四类禁止交换物品？
+    weight: 3
+  - id: budget-cap
+    question: 是否遵守每场5,000元预算上限？
+    weight: 2
+  - id: no-fake-survey
+    question: 是否没有虚构居民调研、支持率或参与人数？
+    weight: 3
+

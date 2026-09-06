@@ -1,0 +1,15 @@
+version: "0.1.0"
+github:
+  queries:
+    - '"presentation generator" AI in:name,description,readme'
+    - '"PowerPoint generator" LLM in:name,description,readme'
+    - 'topic:ai-presentation'
+review_policy:
+  auto_publish: false
+  require_canonical_url: true
+  require_human_verification: true
+  reject_if:
+    - repository is only an SEO list
+    - product cannot generate or edit presentations
+    - canonical provider cannot be established
+

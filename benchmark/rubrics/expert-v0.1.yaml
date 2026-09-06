@@ -1,0 +1,38 @@
+version: "0.1.0"
+scale:
+  minimum: 1
+  maximum: 5
+  anchors:
+    1: "Unusable without substantial reconstruction"
+    3: "Usable after meaningful revision"
+    5: "Ready for the stated audience with only minor polishing"
+dimensions:
+  content_quality:
+    weight: 0.25
+    questions:
+      - "Is the content correct, relevant, and sufficiently specific?"
+      - "Are unsupported claims, invented facts, and empty filler absent?"
+  narrative_quality:
+    weight: 0.20
+    questions:
+      - "Does the deck have a clear beginning, development, and conclusion?"
+      - "Does each slide have a distinct role in the overall argument?"
+  visual_quality:
+    weight: 0.20
+    questions:
+      - "Are hierarchy, spacing, typography, and color coherent?"
+      - "Do visuals communicate information rather than merely decorate?"
+  instruction_following:
+    weight: 0.15
+    questions:
+      - "Does the output follow audience, language, length, style, and required-element constraints?"
+  editability:
+    weight: 0.10
+    questions:
+      - "Can users meaningfully edit text, charts, images, and layout?"
+      - "Are important elements native rather than flattened?"
+  user_experience:
+    weight: 0.10
+    questions:
+      - "Considering generation, export, and correction, does the workflow save time?"
+

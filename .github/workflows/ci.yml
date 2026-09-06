@@ -1,0 +1,29 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - run: pip install -e ".[dev]"
+      - run: ruff check src tests
+      - run: pytest
+      - run: openpptbench validate benchmark/tasks
+      - run: openpptbench validate submissions/example.manifest.json --schema benchmark/schema/submission.schema.json
+      - run: openpptbench validate submissions/example.evidence.json --schema benchmark/schema/evidence.schema.json
+      - run: openpptbench validate data/products --schema benchmark/schema/product-snapshot.schema.json
+      - run: openpptbench validate data/discovery/example.json --schema benchmark/schema/discovery.schema.json
+      - run: >-
+          openpptbench rank data/evidence
+          --products data/products
+          --config benchmark/config/capabilities-v0.2.yaml
+          --as-of 2026-09-06T00:00:00Z
+          --output public/rankings.json
+      - run: openpptbench build-site public/rankings.json --products data/products --output-dir public/site

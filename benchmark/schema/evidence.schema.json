@@ -1,0 +1,63 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openpptbench.org/schema/evidence.schema.json",
+  "title": "Normalized evaluation evidence",
+  "type": "object",
+  "required": ["schema_version", "evidence_id", "product_snapshot_id", "source", "scope", "observation", "provenance"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "0.2.0-draft"},
+    "evidence_id": {"type": "string"},
+    "product_snapshot_id": {"type": "string"},
+    "source": {
+      "type": "object",
+      "required": ["name", "type", "version"],
+      "properties": {
+        "name": {"type": "string"},
+        "type": {"enum": ["upstream_benchmark", "local_run", "blind_arena", "expert_review", "vendor_claim", "community_report"]},
+        "version": {"type": "string"},
+        "url": {"type": ["string", "null"]},
+        "adapter_version": {"type": ["string", "null"]}
+      },
+      "additionalProperties": false
+    },
+    "scope": {
+      "type": "object",
+      "required": ["track", "scenario", "language", "capability"],
+      "properties": {
+        "track": {"type": "string"},
+        "scenario": {"type": "string"},
+        "language": {"type": "string"},
+        "capability": {"type": "string"},
+        "task_ids": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": false
+    },
+    "observation": {
+      "type": "object",
+      "required": ["raw_score", "raw_scale", "sample_size"],
+      "properties": {
+        "raw_score": {"type": "number"},
+        "raw_scale": {"type": "string"},
+        "normalized_score": {"type": ["number", "null"], "minimum": 0, "maximum": 100},
+        "sample_size": {"type": "integer", "minimum": 1},
+        "uncertainty": {"type": ["number", "null"], "minimum": 0}
+      },
+      "additionalProperties": false
+    },
+    "provenance": {
+      "type": "object",
+      "required": ["observed_at", "recorded_at", "confidence_class", "artifacts_available"],
+      "properties": {
+        "observed_at": {"type": "string", "format": "date-time"},
+        "recorded_at": {"type": "string", "format": "date-time"},
+        "confidence_class": {"enum": ["A", "B", "C", "D"]},
+        "artifacts_available": {"type": "boolean"},
+        "artifact_refs": {"type": "array", "items": {"type": "string"}},
+        "notes": {"type": "string"}
+      },
+      "additionalProperties": false
+    }
+  }
+}
+

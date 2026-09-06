@@ -1,0 +1,12 @@
+{
+  "schema_version": "0.2.0-draft",
+  "candidate_id": "example-only-2026-09-06",
+  "name": "Example candidate (not a real product)",
+  "url": "https://example.com/",
+  "discovered_at": "2026-09-06T00:00:00Z",
+  "source_type": "editorial_search",
+  "source_url": "https://example.com/",
+  "status": "rejected",
+  "notes": "Schema fixture only."
+}
+

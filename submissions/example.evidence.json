@@ -1,0 +1,35 @@
+{
+  "schema_version": "0.2.0-draft",
+  "evidence_id": "example-product__opb-business-001__content-grounding",
+  "product_snapshot_id": "example-product__2026-09-06",
+  "source": {
+    "name": "OpenPPTBench Chinese product runs",
+    "type": "local_run",
+    "version": "0.1.0",
+    "url": null,
+    "adapter_version": null
+  },
+  "scope": {
+    "track": "prompt_to_deck",
+    "scenario": "business",
+    "language": "zh-CN",
+    "capability": "content_grounding",
+    "task_ids": ["opb-business-001"]
+  },
+  "observation": {
+    "raw_score": 4,
+    "raw_scale": "1-5 expert rubric",
+    "normalized_score": 75,
+    "sample_size": 1,
+    "uncertainty": null
+  },
+  "provenance": {
+    "observed_at": "2026-09-06T02:03:00Z",
+    "recorded_at": "2026-09-06T03:00:00Z",
+    "confidence_class": "A",
+    "artifacts_available": true,
+    "artifact_refs": ["sha256:0000000000000000000000000000000000000000000000000000000000000000"],
+    "notes": "Schema example only; not ranking evidence."
+  }
+}
+

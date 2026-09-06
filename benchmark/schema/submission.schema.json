@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openpptbench.org/schema/submission.schema.json",
+  "title": "OpenPPTBench submission manifest",
+  "type": "object",
+  "required": ["schema_version", "submission_id", "task_id", "track", "product", "run", "artifact"],
+  "properties": {
+    "schema_version": {"const": "0.1.0"},
+    "submission_id": {"type": "string"},
+    "task_id": {"type": "string"},
+    "track": {"type": "string"},
+    "product": {
+      "type": "object",
+      "required": ["name", "provider", "plan"],
+      "properties": {
+        "name": {"type": "string"},
+        "provider": {"type": "string"},
+        "version": {"type": ["string", "null"]},
+        "plan": {"type": "string"},
+        "url": {"type": ["string", "null"]}
+      }
+    },
+    "run": {
+      "type": "object",
+      "required": ["started_at", "completed_at", "attempt", "locale", "manual_edits"],
+      "properties": {
+        "started_at": {"type": "string", "format": "date-time"},
+        "completed_at": {"type": "string", "format": "date-time"},
+        "attempt": {"type": "integer", "minimum": 1},
+        "locale": {"type": "string"},
+        "settings": {"type": "object"},
+        "manual_edits": {"const": false},
+        "notes": {"type": "string"}
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "required": ["format", "sha256", "redistribution"],
+      "properties": {
+        "format": {"enum": ["pptx", "pdf", "images", "web"]},
+        "path": {"type": ["string", "null"]},
+        "sha256": {"type": "string", "pattern": "^[a-fA-F0-9]{64}$"},
+        "redistribution": {"enum": ["allowed", "screenshots_only", "metrics_only"]}
+      }
+    },
+    "scores": {"type": "object"},
+    "metrics_path": {"type": ["string", "null"]}
+  },
+  "additionalProperties": false
+}
+

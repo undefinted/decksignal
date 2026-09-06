@@ -1,0 +1,43 @@
+name: Submit a new AI presentation tool
+description: Propose a product for verification and evaluation
+title: "[Tool] "
+labels: ["discovery"]
+body:
+  - type: input
+    id: name
+    attributes:
+      label: Product name
+    validations:
+      required: true
+  - type: input
+    id: canonical_url
+    attributes:
+      label: Official product URL
+    validations:
+      required: true
+  - type: dropdown
+    id: kind
+    attributes:
+      label: Product type
+      options:
+        - End-user web or desktop product
+        - PowerPoint or Google Slides add-in
+        - Open-source generation system
+        - General AI with presentation capability
+    validations:
+      required: true
+  - type: textarea
+    id: evidence
+    attributes:
+      label: Evidence of presentation capability
+      description: Link to official documentation, release notes, or a repository.
+    validations:
+      required: true
+  - type: textarea
+    id: disclosure
+    attributes:
+      label: Relationship disclosure
+      description: State whether you work for, invested in, or are affiliated with this product.
+    validations:
+      required: true
+

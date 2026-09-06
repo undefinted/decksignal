@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Blinded pairwise review",
+  "type": "object",
+  "required": ["review_id", "task_id", "left_submission_id", "right_submission_id", "choices", "reviewer_group", "created_at"],
+  "properties": {
+    "review_id": {"type": "string"},
+    "task_id": {"type": "string"},
+    "left_submission_id": {"type": "string"},
+    "right_submission_id": {"type": "string"},
+    "choices": {
+      "type": "object",
+      "required": ["content", "visual", "ready_to_use"],
+      "properties": {
+        "content": {"enum": ["left", "right", "tie"]},
+        "visual": {"enum": ["left", "right", "tie"]},
+        "ready_to_use": {"enum": ["left", "right", "tie"]}
+      }
+    },
+    "reviewer_group": {"enum": ["general", "designer", "business", "educator", "student"]},
+    "created_at": {"type": "string", "format": "date-time"},
+    "duration_seconds": {"type": "number", "minimum": 0}
+  },
+  "additionalProperties": false
+}
+

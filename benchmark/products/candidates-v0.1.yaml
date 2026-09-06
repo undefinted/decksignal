@@ -1,0 +1,105 @@
+version: "0.1.0"
+verified_on: "2026-09-06"
+notes:
+  - "A candidate entry is not an endorsement or evidence of current free access."
+  - "Plan, price, export capability, and visible model version must be captured at run time."
+products:
+  - id: gamma
+    name: Gamma
+    kind: end_user_product
+    region: international
+    url: https://gamma.app/
+    pilot_priority: 1
+    status: awaiting_run
+  - id: canva
+    name: Canva
+    kind: end_user_product
+    region: international
+    url: https://www.canva.com/ai-presentation-maker/
+    pilot_priority: 1
+    status: awaiting_run
+  - id: beautiful-ai
+    name: Beautiful.ai
+    kind: end_user_product
+    region: international
+    url: https://www.beautiful.ai/
+    pilot_priority: 1
+    status: awaiting_run
+  - id: decktopus
+    name: Decktopus
+    kind: end_user_product
+    region: international
+    url: https://www.decktopus.com/
+    pilot_priority: 2
+    status: awaiting_run
+  - id: prezi
+    name: Prezi AI
+    kind: end_user_product
+    region: international
+    url: https://prezi.com/
+    pilot_priority: 2
+    status: awaiting_run
+  - id: pitch
+    name: Pitch
+    kind: end_user_product
+    region: international
+    url: https://pitch.com/
+    pilot_priority: 2
+    status: awaiting_run
+  - id: presentations-ai
+    name: Presentations.AI
+    kind: end_user_product
+    region: international
+    url: https://www.presentations.ai/
+    pilot_priority: 3
+    status: awaiting_verification
+  - id: plus-ai
+    name: Plus AI
+    kind: end_user_product
+    region: international
+    url: https://www.plusdocs.com/
+    pilot_priority: 3
+    status: awaiting_verification
+  - id: slidesai
+    name: SlidesAI
+    kind: end_user_product
+    region: international
+    url: https://www.slidesai.io/
+    pilot_priority: 3
+    status: awaiting_verification
+  - id: wps-aippt
+    name: WPS AiPPT
+    kind: end_user_product
+    region: china
+    url: https://ppt.wps.cn/
+    pilot_priority: 1
+    status: awaiting_run
+  - id: xfyun-zhiwen
+    name: 讯飞智文
+    kind: end_user_product
+    region: china
+    url: https://zhiwen.xfyun.cn/
+    pilot_priority: 1
+    status: awaiting_run
+  - id: baidu-wenku
+    name: 百度文库 AI PPT
+    kind: end_user_product
+    region: china
+    url: https://wenku.baidu.com/
+    pilot_priority: 2
+    status: awaiting_verification
+  - id: presenton
+    name: Presenton
+    kind: open_source_system
+    region: international
+    url: https://github.com/presenton/presenton
+    pilot_priority: 1
+    status: awaiting_run
+  - id: pptagent
+    name: PPTAgent
+    kind: open_source_system
+    region: international
+    url: https://github.com/icip-cas/PPTAgent
+    pilot_priority: 2
+    status: awaiting_run
+

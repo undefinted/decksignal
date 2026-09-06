@@ -1,0 +1,27 @@
+id: opb-business-003
+version: "0.1.0"
+track: prompt_to_deck
+scenario: business
+language: zh-CN
+title: 城市咖啡店选址决策
+prompt: >-
+  制作一份7至8页的咖啡店选址决策演示。候选A：月租4.8万元，日均人流18,000，竞品8家，
+  距地铁口120米；候选B：月租3.2万元，日均人流11,000，竞品3家，距地铁口450米；候选C：
+  月租4.0万元，日均人流14,500，竞品5家，距地铁口260米。假设只根据这些信息提出推荐，
+  面向两位创业合伙人。必须区分事实、推断和仍需调研的信息，不能虚构营收预测。中文，强调决策过程。
+constraints:
+  slide_count_min: 7
+  slide_count_max: 8
+  audience: 创业合伙人
+  required_sections: [决策标准, 候选比较, 推荐, 风险, 待调研事项]
+checks:
+  - id: all-options
+    question: 是否准确比较A、B、C三个候选点？
+    weight: 2
+  - id: uncertainty
+    question: 是否清晰区分已知事实、推断与未知信息？
+    weight: 3
+  - id: no-invented-revenue
+    question: 是否没有虚构营收、客单价或转化率？
+    weight: 3
+

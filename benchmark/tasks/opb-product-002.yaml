@@ -1,0 +1,27 @@
+id: opb-product-002
+version: "0.1.0"
+track: prompt_to_deck
+scenario: product
+language: zh-CN
+title: 智能会议纪要产品路线图
+prompt: >-
+  制作一份9页的智能会议纪要产品内部路线图演示，面向产品、工程和销售团队。当前能力：中文转写、说话人分离、
+  摘要和行动项；当前主要问题：嘈杂环境准确率下降、行业术语识别弱、行动项负责人有时错误。下一季度候选工作：
+  自定义词表、人工确认工作流、CRM导出、移动端录音。请给出优先级建议、依赖关系、成功指标和明确不做什么。
+  不得编造准确率数值。中文，便于团队做取舍。
+constraints:
+  slide_count_min: 9
+  slide_count_max: 9
+  audience: 产品、工程和销售团队
+  required_sections: [现状, 问题, 优先级, 依赖, 指标, 不做事项, 路线图]
+checks:
+  - id: no-invented-accuracy
+    question: 是否没有编造任何转写或识别准确率？
+    weight: 3
+  - id: prioritization
+    question: 是否给出有理由的候选工作优先级，而非全部同时进行？
+    weight: 3
+  - id: non-goals
+    question: 是否明确列出下一季度不做的事项？
+    weight: 2
+

@@ -1,0 +1,38 @@
+{
+  "schema_version": "0.1.0",
+  "submission_id": "example-product__opb-business-001__2026-09-06",
+  "task_id": "opb-business-001",
+  "track": "prompt_to_deck",
+  "product": {
+    "name": "Example Product",
+    "provider": "Example Provider",
+    "version": null,
+    "plan": "free",
+    "url": "https://example.com"
+  },
+  "run": {
+    "started_at": "2026-09-06T02:00:00Z",
+    "completed_at": "2026-09-06T02:03:00Z",
+    "attempt": 1,
+    "locale": "zh-CN",
+    "settings": {"theme": "default"},
+    "manual_edits": false,
+    "notes": "Example only; not a leaderboard submission."
+  },
+  "artifact": {
+    "format": "pptx",
+    "path": "artifacts/example.pptx",
+    "sha256": "0000000000000000000000000000000000000000000000000000000000000000",
+    "redistribution": "metrics_only"
+  },
+  "metrics_path": "results/raw/example.metrics.json",
+  "scores": {
+    "content_quality": 3.0,
+    "narrative_quality": 3.0,
+    "visual_quality": 3.0,
+    "instruction_following": 3.0,
+    "editability": 3.0,
+    "user_experience": 3.0
+  }
+}
+

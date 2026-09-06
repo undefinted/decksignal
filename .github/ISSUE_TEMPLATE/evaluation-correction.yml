@@ -1,0 +1,31 @@
+name: Challenge an evaluation result
+description: Report a reproducibility, mapping, artifact, or scoring problem
+title: "[Evaluation correction] "
+labels: ["evaluation-review"]
+body:
+  - type: input
+    id: evidence_id
+    attributes:
+      label: Evidence or submission ID
+    validations:
+      required: true
+  - type: dropdown
+    id: problem
+    attributes:
+      label: Problem type
+      options:
+        - Incorrect product version
+        - Upstream mapping error
+        - Artifact mismatch
+        - Scoring or aggregation error
+        - Missing conflict disclosure
+        - Other methodological issue
+    validations:
+      required: true
+  - type: textarea
+    id: details
+    attributes:
+      label: Details and supporting evidence
+    validations:
+      required: true
+

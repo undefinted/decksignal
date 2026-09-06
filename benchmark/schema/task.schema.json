@@ -1,0 +1,43 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openpptbench.org/schema/task.schema.json",
+  "title": "OpenPPTBench task",
+  "type": "object",
+  "required": ["id", "version", "track", "scenario", "language", "title", "prompt", "constraints", "checks"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {"type": "string", "pattern": "^opb-[a-z]+-[0-9]{3}$"},
+    "version": {"type": "string"},
+    "track": {"enum": ["prompt_to_deck", "document_to_deck", "deck_editing"]},
+    "scenario": {"enum": ["business", "education", "product"]},
+    "language": {"type": "string"},
+    "title": {"type": "string", "minLength": 1},
+    "prompt": {"type": "string", "minLength": 20},
+    "constraints": {
+      "type": "object",
+      "required": ["slide_count_min", "slide_count_max", "audience"],
+      "properties": {
+        "slide_count_min": {"type": "integer", "minimum": 1},
+        "slide_count_max": {"type": "integer", "minimum": 1},
+        "audience": {"type": "string"},
+        "required_sections": {"type": "array", "items": {"type": "string"}}
+      },
+      "additionalProperties": true
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": ["id", "question", "weight"],
+        "properties": {
+          "id": {"type": "string"},
+          "question": {"type": "string"},
+          "weight": {"type": "number", "exclusiveMinimum": 0}
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
+

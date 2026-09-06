@@ -1,0 +1,38 @@
+version: "0.2.0-draft"
+sources:
+  - id: slidesgen-bench
+    name: SlidesGen-Bench
+    type: upstream_benchmark
+    url: https://github.com/YunqiaoYang/SlidesGen-Bench
+    adapter_status: available
+    capabilities: [content_grounding, visual_design, native_editability]
+  - id: presentbench
+    name: PresentBench
+    type: upstream_benchmark
+    url: https://github.com/PresentBench/PresentBench
+    adapter_status: available
+    capabilities: [content_grounding, instruction_following, narrative_structure]
+  - id: gloss
+    name: Gloss
+    type: upstream_benchmark
+    url: https://github.com/aronchick/gloss
+    adapter_status: available
+    capabilities: [native_editability, export_fidelity]
+  - id: deckbench
+    name: DECKBench
+    type: upstream_benchmark
+    url: https://github.com/morgan-heisler/DeckBench
+    adapter_status: research
+    capabilities: [content_grounding, narrative_structure, editing_capability]
+  - id: pptc
+    name: PPTC
+    type: upstream_benchmark
+    url: https://github.com/gydpku/PPTC
+    adapter_status: research
+    capabilities: [editing_capability, instruction_following]
+  - id: openpptbench-local
+    name: OpenPPTBench Chinese product runs
+    type: local_run
+    url: null
+    adapter_status: available
+    capabilities: [content_grounding, narrative_structure, visual_design, instruction_following, native_editability, export_fidelity, generation_reliability, usability, localization_zh, value]

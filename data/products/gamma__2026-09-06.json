@@ -1,0 +1,13 @@
+{
+  "schema_version": "0.2.0-draft",
+  "snapshot_id": "gamma__2026-09-06",
+  "product_id": "gamma",
+  "name": "Gamma",
+  "provider": "Gamma",
+  "kind": "end_user_product",
+  "canonical_url": "https://gamma.app/",
+  "observed_at": "2026-09-06T00:00:00Z",
+  "status": "queued",
+  "facts": {}
+}
+

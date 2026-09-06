@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openpptbench.org/schema/product-snapshot.schema.json",
+  "title": "Versioned product snapshot",
+  "type": "object",
+  "required": ["schema_version", "snapshot_id", "product_id", "name", "kind", "canonical_url", "observed_at", "status", "facts"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "0.2.0-draft"},
+    "snapshot_id": {"type": "string"},
+    "product_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "name": {"type": "string", "minLength": 1},
+    "provider": {"type": ["string", "null"]},
+    "kind": {"enum": ["end_user_product", "open_source_system", "office_addin", "general_ai"]},
+    "canonical_url": {"type": "string", "format": "uri"},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "status": {"enum": ["discovered", "verified", "queued", "evaluated", "stale", "unavailable", "archived"]},
+    "facts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "required": ["value", "source_url", "verified_at"],
+        "properties": {
+          "value": {},
+          "source_url": {"type": "string", "format": "uri"},
+          "verified_at": {"type": "string", "format": "date-time"}
+        },
+        "additionalProperties": false
+      }
+    }
+  }
+}
+

@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openpptbench.org/schema/discovery.schema.json",
+  "title": "Product discovery candidate",
+  "type": "object",
+  "required": ["schema_version", "candidate_id", "name", "url", "discovered_at", "source_type", "status"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "0.2.0-draft"},
+    "candidate_id": {"type": "string"},
+    "name": {"type": "string"},
+    "url": {"type": "string", "format": "uri"},
+    "discovered_at": {"type": "string", "format": "date-time"},
+    "source_type": {"enum": ["official_release", "repository", "marketplace", "community_submission", "editorial_search"]},
+    "source_url": {"type": ["string", "null"], "format": "uri"},
+    "status": {"enum": ["new", "triaged", "accepted", "rejected", "duplicate"]},
+    "notes": {"type": "string"}
+  }
+}
+

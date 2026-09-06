@@ -1,0 +1,17 @@
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.pytest-tmp/
+.ruff_cache/
+dist/
+build/
+*.egg-info/
+results/raw/*
+!results/raw/.gitkeep
+results/normalized/*
+!results/normalized/.gitkeep
+results/leaderboard/*
+!results/leaderboard/.gitkeep
+public/
+monitoring-output/

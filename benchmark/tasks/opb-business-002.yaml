@@ -1,0 +1,27 @@
+id: opb-business-002
+version: "0.1.0"
+track: prompt_to_deck
+scenario: business
+language: zh-CN
+title: 客服效率改善方案
+prompt: >-
+  为一家拥有120名客服人员的电商公司制作一份8至9页的《客服效率改善方案》。当前月均咨询42万次，
+  首次响应时间95秒，一次解决率68%，客户满意度82%，人工月均成本96万元。目标是在6个月内将首次响应时间
+  降至45秒、一次解决率提升到78%、满意度达到88%，同时不得以裁员作为方案。请分析问题、提出分阶段措施、
+  给出指标看板和风险控制。面向客服负责人和财务负责人，中文，务实而非口号式。
+constraints:
+  slide_count_min: 8
+  slide_count_max: 9
+  audience: 客服负责人和财务负责人
+  required_sections: [现状, 目标, 原因分析, 分阶段措施, 指标看板, 风险控制]
+checks:
+  - id: no-layoffs
+    question: 方案是否避免把裁员作为措施？
+    weight: 3
+  - id: targets-preserved
+    question: 是否准确保留三个6个月目标？
+    weight: 2
+  - id: actionable-plan
+    question: 是否包含负责人、时间或可执行动作，而非只有口号？
+    weight: 2
+
