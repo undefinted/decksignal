@@ -4,11 +4,15 @@
   "platform": "小红书",
   "url": "https://www.xiaohongshu.com/explore/6a8c16f1000000003400e3ce",
   "captured_at": "2026-09-09T00:00:00Z",
-  "access_status": "inaccessible",
-  "title": null,
+  "access_status": "captured",
+  "title": "手把手教你用AI搓出高级设计感PPT👾",
   "author": null,
   "content_type": "video",
-  "claims": [],
-  "notes": "公开网页返回‘页面不见了’，搜索引擎无缓存；等待作者标题、截图或视频转写后再提取工作流。"
+  "claims": [
+    {"claim": "在AI工作任务中安装GitHub上的PPT Skill，并通过更具体的提示词使通用Skill适配具体案例。", "claim_type": "workflow", "verification_status": "unverified"},
+    {"claim": "输入跨境电商拉美市场文稿生成初稿，再通过两轮提示词分别调整字体和补充过空页面的内容。", "claim_type": "workflow", "verification_status": "unverified"},
+    {"claim": "完成后把整套调试过程创建为专属Skill，复用同一视觉风格。", "claim_type": "feature", "verification_status": "unverified"}
+  ],
+  "notes": "已从完整分享链接的公开HTML元数据和中文字幕提取；视频提及豆包与名为Zara的GitHub PPT Skill，具体仓库链接仍需从评论区核验。"
 }
 

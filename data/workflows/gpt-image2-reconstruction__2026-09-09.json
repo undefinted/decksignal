@@ -1,0 +1,20 @@
+{
+  "schema_version": "0.3.0-draft",
+  "snapshot_id": "gpt-image2-reconstruction__2026-09-09",
+  "workflow_id": "gpt-image2-reconstruction",
+  "name": "GPT Image 2图像生成＋逐页可编辑还原",
+  "observed_at": "2026-09-09T00:00:00Z",
+  "status": "documented",
+  "source_refs": ["xhs-6a6a0330000000001101aa25"],
+  "steps": [
+    {"order": 1, "action": "输入论文、主题指令和参考PPT风格图片，要求生成四套缩略图预览。", "actor": "mixed", "component": "GPT 5.6 / Image 2（作者表述，待核验）", "estimated_minutes": null},
+    {"order": 2, "action": "人工选择一套视觉风格，继续生成图像化的完整学术PPT。", "actor": "mixed", "component": "Image 2（作者表述，待核验）", "estimated_minutes": null},
+    {"order": 3, "action": "选择WPS快速转换，或使用GPT/Codex按页恢复文本框、图片和其他可编辑元素。", "actor": "mixed", "component": "WPS / GPT 5.5 / Codex（替代路径）", "estimated_minutes": null},
+    {"order": 4, "action": "将逐页生成的PPTX页面组装为最终可编辑演示文稿。", "actor": "human", "component": "PowerPoint兼容编辑器", "estimated_minutes": null}
+  ],
+  "input_type": "论文＋主题要求＋参考风格图片",
+  "output_type": "pptx",
+  "manual_effort_level": "high",
+  "notes": "待获取原始提示词并分别测试WPS转换、GPT逐页还原和Codex逐页还原三个分支。"
+}
+

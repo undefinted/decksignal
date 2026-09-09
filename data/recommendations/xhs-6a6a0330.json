@@ -4,11 +4,15 @@
   "platform": "小红书",
   "url": "https://www.xiaohongshu.com/explore/6a6a0330000000001101aa25",
   "captured_at": "2026-09-09T00:00:00Z",
-  "access_status": "inaccessible",
-  "title": null,
+  "access_status": "captured",
+  "title": "最新gpt5.6+image2输出高质量学术PPT",
   "author": null,
   "content_type": "video",
-  "claims": [],
-  "notes": "公开网页返回‘页面不见了’，搜索引擎无缓存；等待作者标题、截图或视频转写后再提取工作流。"
+  "claims": [
+    {"claim": "将论文和参考风格图片输入GPT，并明确要求Image 2生成四套缩略图以选择视觉风格。", "claim_type": "workflow", "verification_status": "unverified"},
+    {"claim": "选定风格后继续使用Image 2生成图像化学术PPT，再用WPS转换或用GPT/Codex逐页恢复为可编辑PPTX。", "claim_type": "workflow", "verification_status": "unverified"},
+    {"claim": "作者称GPT网页端逐页恢复比Codex更快，并称示例第二页可达到约99%的视觉还原度。", "claim_type": "speed", "verification_status": "unverified"}
+  ],
+  "notes": "已从完整分享链接的公开HTML元数据和中文字幕提取；模型名称、速度和还原度均为作者表述，尚未独立复测。"
 }
 

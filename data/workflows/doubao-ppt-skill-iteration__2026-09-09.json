@@ -1,0 +1,21 @@
+{
+  "schema_version": "0.3.0-draft",
+  "snapshot_id": "doubao-ppt-skill-iteration__2026-09-09",
+  "workflow_id": "doubao-ppt-skill-iteration",
+  "name": "豆包＋GitHub PPT Skill多轮设计迭代",
+  "observed_at": "2026-09-09T00:00:00Z",
+  "status": "documented",
+  "source_refs": ["xhs-6a8c16f1000000003400e3ce"],
+  "steps": [
+    {"order": 1, "action": "从GitHub取得PPT Skill并安装到AI工作任务。", "actor": "human", "component": "Zara PPT Skill（仓库待核验）", "estimated_minutes": null},
+    {"order": 2, "action": "输入完整文稿，调用Skill并补充具体风格和交付要求，生成1.0初稿。", "actor": "mixed", "component": "豆包AI工作任务", "estimated_minutes": null},
+    {"order": 3, "action": "通过第一轮反馈替换默认字体，提升视觉风格。", "actor": "mixed", "component": "豆包AI工作任务", "estimated_minutes": null},
+    {"order": 4, "action": "通过第二轮反馈重读原文并补充内容过空的页面。", "actor": "mixed", "component": "豆包AI工作任务", "estimated_minutes": null},
+    {"order": 5, "action": "把调试后的流程创建为专属Skill，以复用同一风格。", "actor": "mixed", "component": "豆包Skill创建功能", "estimated_minutes": null}
+  ],
+  "input_type": "完整分析文稿＋视觉风格要求",
+  "output_type": "pptx",
+  "manual_effort_level": "medium",
+  "notes": "待核验GitHub Skill链接、原始提示词、豆包产品版本、导出格式和实际可编辑性。"
+}
+

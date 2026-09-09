@@ -1,0 +1,17 @@
+{
+  "schema_version": "0.3.0-draft",
+  "snapshot_id": "claude-deepseek-harness-template__2026-09-09",
+  "workflow_id": "claude-deepseek-harness-template",
+  "name": "Claude＋DeepSeek＋Harness Anything Skill模板工作流",
+  "observed_at": "2026-09-09T00:00:00Z",
+  "status": "discovered",
+  "source_refs": ["xhs-6a9ba088000000000b034d13"],
+  "steps": [
+    {"order": 1, "action": "使用Claude、DeepSeek和Harness Anything Skill，结合高校模板与网络检索数据制作教材PPT；具体模型分工和执行步骤待补。", "actor": "mixed", "component": "Claude / DeepSeek / Harness Anything Skill", "estimated_minutes": null}
+  ],
+  "input_type": "中学教材主题＋高校PPT模板＋网络检索数据",
+  "output_type": "pptx",
+  "manual_effort_level": "unknown",
+  "notes": "当前仅有标题和正文信息，未取得字幕或步骤说明，不具备可复现实测条件。"
+}
+

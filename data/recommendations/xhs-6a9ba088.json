@@ -4,11 +4,14 @@
   "platform": "小红书",
   "url": "https://www.xiaohongshu.com/explore/6a9ba088000000000b034d13",
   "captured_at": "2026-09-09T00:00:00Z",
-  "access_status": "inaccessible",
-  "title": null,
+  "access_status": "partial",
+  "title": "Claude加DeepSeek自动化制作PPT，使用Harness Anything的Skill",
   "author": null,
   "content_type": "video",
-  "claims": [],
-  "notes": "公开网页返回‘页面不见了’，搜索引擎无缓存；等待作者标题、截图或视频转写后再提取工作流。"
+  "claims": [
+    {"claim": "组合Claude、DeepSeek和Harness Anything的Skill制作中学教材PPT。", "claim_type": "workflow", "verification_status": "unverified"},
+    {"claim": "工作流使用华南理工大学模板，并通过网络检索取得内容数据。", "claim_type": "workflow", "verification_status": "unverified"}
+  ],
+  "notes": "完整分享链接可访问标题和正文，但页面未提供字幕，无法从公开信息确认详细步骤、提示词和模型分工。"
 }
 
