@@ -1,5 +1,12 @@
 # Changelog
 
+## 0.3.0-draft
+
+- Expanded evaluation subjects from individual products to multi-tool production workflows.
+- Added workflow snapshot and online recommendation source schemas.
+- Added backward-compatible workflow evidence and mixed-subject ranking support.
+- Added a conservative ingestion process for social posts and tutorials.
+
 ## 0.2.0-alpha.1
 
 - Repositioned the project as a continuous evaluation observatory.
@@ -15,4 +22,3 @@
 
 - Added ten Chinese prompt-to-deck tasks.
 - Added native PPTX inspection and expert-score aggregation.
-

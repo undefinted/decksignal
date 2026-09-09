@@ -8,7 +8,7 @@ from typing import Any
 
 import yaml
 
-from .store import index_by, latest_product_snapshots, load_json_records
+from .store import index_by, latest_product_snapshots, latest_snapshots, load_json_records
 
 CONFIDENCE_WEIGHTS = {"A": 1.0, "B": 0.7, "C": 0.4, "D": 0.0}
 HALF_LIFE_DAYS = {
@@ -59,14 +59,40 @@ def build_rankings(
     product_path: str | Path,
     config_path: str | Path,
     *,
+    workflow_path: str | Path | None = None,
     as_of: datetime | None = None,
 ) -> dict[str, Any]:
     evidence_records = load_json_records(evidence_path)
     product_records = load_json_records(product_path)
     products = index_by(product_records, "snapshot_id")
+    subjects = {
+        snapshot_id: {
+            **record,
+            "subject_id": record["product_id"],
+            "subject_kind": "product",
+        }
+        for snapshot_id, record in products.items()
+    }
     current_snapshot_ids = {
         record["snapshot_id"] for record in latest_product_snapshots(product_records).values()
     }
+    if workflow_path is not None:
+        workflow_records = load_json_records(workflow_path)
+        workflows = index_by(workflow_records, "snapshot_id")
+        subjects.update(
+            {
+                snapshot_id: {
+                    **record,
+                    "subject_id": record["workflow_id"],
+                    "subject_kind": "workflow",
+                }
+                for snapshot_id, record in workflows.items()
+            }
+        )
+        current_snapshot_ids.update(
+            record["snapshot_id"]
+            for record in latest_snapshots(workflow_records, "workflow_id").values()
+        )
     config = load_config(config_path)
     as_of = as_of or datetime.now(timezone.utc)
     if as_of.tzinfo is None:
@@ -78,17 +104,21 @@ def build_rankings(
         filters = board.get("filters", {})
         grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
         for evidence in evidence_records:
-            if evidence["product_snapshot_id"] not in current_snapshot_ids:
+            subject = evidence.get("subject")
+            snapshot_id = (
+                subject["snapshot_id"] if subject else evidence.get("product_snapshot_id")
+            )
+            if snapshot_id not in current_snapshot_ids:
                 continue
             if evidence["scope"]["capability"] not in required:
                 continue
             if not _matches_filters(evidence, filters):
                 continue
-            if evidence["product_snapshot_id"] not in products:
-                raise ValueError(
-                    f"Unknown product snapshot: {evidence['product_snapshot_id']}"
-                )
-            grouped[evidence["product_snapshot_id"]].append(evidence)
+            if snapshot_id not in subjects:
+                raise ValueError(f"Unknown evaluation subject snapshot: {snapshot_id}")
+            if subject and subject["kind"] != subjects[snapshot_id]["subject_kind"]:
+                raise ValueError(f"Subject kind does not match snapshot: {snapshot_id}")
+            grouped[snapshot_id].append(evidence)
 
         rows = []
         for snapshot_id, records in grouped.items():
@@ -136,12 +166,14 @@ def build_rankings(
                 and len(source_names) >= int(board["minimum_sources"])
                 and (not board.get("require_reproducible") or reproducible)
             )
-            product = products[snapshot_id]
+            subject_record = subjects[snapshot_id]
             rows.append(
                 {
                     "snapshot_id": snapshot_id,
-                    "product_id": product["product_id"],
-                    "product": product["name"],
+                    "subject_id": subject_record["subject_id"],
+                    "subject_kind": subject_record["subject_kind"],
+                    "product_id": subject_record["subject_id"],
+                    "product": subject_record["name"],
                     "score": round(score, 3) if score is not None else None,
                     "eligible": eligible,
                     "coverage": round(coverage, 4),

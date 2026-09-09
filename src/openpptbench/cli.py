@@ -48,6 +48,7 @@ def build_parser() -> argparse.ArgumentParser:
     rank_parser = subparsers.add_parser("rank", help="Build evidence-aware leaderboards")
     rank_parser.add_argument("evidence")
     rank_parser.add_argument("--products", required=True)
+    rank_parser.add_argument("--workflows")
     rank_parser.add_argument("--config", default="benchmark/config/capabilities-v0.2.yaml")
     rank_parser.add_argument("--as-of", help="ISO-8601 timestamp for reproducible ranking")
     rank_parser.add_argument("--output", "-o")
@@ -77,6 +78,7 @@ def build_parser() -> argparse.ArgumentParser:
     site_parser = subparsers.add_parser("build-site", help="Build the static results website")
     site_parser.add_argument("rankings")
     site_parser.add_argument("--products", required=True)
+    site_parser.add_argument("--workflows")
     site_parser.add_argument("--output-dir", required=True)
 
     monitor_parser = subparsers.add_parser("check-products", help="Check product URL health")
@@ -126,7 +128,14 @@ def main(argv: list[str] | None = None) -> int:
         elif args.command == "rank":
             as_of = datetime.fromisoformat(args.as_of.replace("Z", "+00:00")) if args.as_of else None
             _write_json(
-                build_rankings(args.evidence, args.products, args.config, as_of=as_of), args.output
+                build_rankings(
+                    args.evidence,
+                    args.products,
+                    args.config,
+                    workflow_path=args.workflows,
+                    as_of=as_of,
+                ),
+                args.output,
             )
         elif args.command == "import-csv":
             records = import_normalized_csv(
@@ -151,7 +160,15 @@ def main(argv: list[str] | None = None) -> int:
             written = write_evidence_records(records, args.output_dir)
             _write_json({"imported": len(written), "files": written}, None)
         elif args.command == "build-site":
-            _write_json(build_site(args.rankings, args.products, args.output_dir), None)
+            _write_json(
+                build_site(
+                    args.rankings,
+                    args.products,
+                    args.output_dir,
+                    workflows_path=args.workflows,
+                ),
+                None,
+            )
         elif args.command == "check-products":
             if args.timeout <= 0 or args.workers <= 0:
                 raise ValueError("--timeout and --workers must be positive")

@@ -26,11 +26,13 @@ jobs:
       - run: >-
           openpptbench rank data/evidence
           --products data/products
+          --workflows data/workflows
           --config benchmark/config/capabilities-v0.2.yaml
           --output public/rankings.json
       - run: >-
           openpptbench build-site public/rankings.json
           --products data/products
+          --workflows data/workflows
           --output-dir public/site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
@@ -46,4 +48,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-

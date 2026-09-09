@@ -5,7 +5,7 @@ import json
 from pathlib import Path
 from typing import Any
 
-from .store import latest_product_snapshots, load_json_records
+from .store import latest_product_snapshots, latest_snapshots, load_json_records
 
 STYLE = """
 :root{font-family:Inter,ui-sans-serif,system-ui,sans-serif;color:#172033;background:#f6f7fb}
@@ -54,15 +54,34 @@ def _product_page(product: dict[str, Any], boards: dict[str, Any]) -> str:
             appearances.append(
                 f'<section class="card"><h2>{html.escape(board["label_zh"])}</h2><p>分数：<strong>{row["score"] if row["score"] is not None else "—"}</strong> · 覆盖度：{row["coverage"]*100:.0f}% · 证据来源：{row["source_count"]}</p><div class="grid">{capabilities}</div></section>'
             )
-    body = f'<div class="hero"><h1>{html.escape(product["name"])}</h1><p>状态：{html.escape(product["status"])} · 快照：{html.escape(product["snapshot_id"])}</p><a class="pill" href="{html.escape(product["canonical_url"])}">产品官网</a></div>'
+    source_url = product.get("canonical_url") or product.get("source_refs", ["#"])[0]
+    kind_label = "工具" if product.get("subject_kind") == "product" else "方法工作流"
+    body = f'<div class="hero"><h1>{html.escape(product["name"])}</h1><p>类型：{kind_label} · 状态：{html.escape(product["status"])} · 快照：{html.escape(product["snapshot_id"])}</p><a class="pill" href="{html.escape(source_url)}">查看来源</a></div>'
     body += "".join(appearances) or '<div class="card"><p>该产品尚无评测证据。</p></div>'
     return _page(product["name"], body)
 
 
-def build_site(rankings_path: str | Path, products_path: str | Path, output_dir: str | Path) -> dict[str, Any]:
+def build_site(
+    rankings_path: str | Path,
+    products_path: str | Path,
+    output_dir: str | Path,
+    *,
+    workflows_path: str | Path | None = None,
+) -> dict[str, Any]:
     rankings = json.loads(Path(rankings_path).read_text(encoding="utf-8"))
     product_records = load_json_records(products_path)
-    products = latest_product_snapshots(product_records)
+    subjects = {
+        record["product_id"]: {**record, "subject_kind": "product"}
+        for record in latest_product_snapshots(product_records).values()
+    }
+    if workflows_path is not None:
+        workflow_records = load_json_records(workflows_path)
+        subjects.update(
+            {
+                record["workflow_id"]: {**record, "subject_kind": "workflow"}
+                for record in latest_snapshots(workflow_records, "workflow_id").values()
+            }
+        )
     output = Path(output_dir)
     (output / "assets").mkdir(parents=True, exist_ok=True)
     (output / "assets" / "style.css").write_text(STYLE.strip() + "\n", encoding="utf-8")
@@ -74,8 +93,21 @@ def build_site(rankings_path: str | Path, products_path: str | Path, output_dir:
     body = f'<div class="hero"><h1>AI PPT 动态评测榜</h1><p>聚合独立 benchmark、本地可复现评测和盲评证据；同时呈现分数、覆盖度与证据状态。</p></div><nav class="tabs">{tabs}</nav>{sections}'
     (output / "index.html").write_text(_page("AI PPT 动态评测榜", body), encoding="utf-8")
 
-    product_ids_written: set[str] = set()
-    for snapshot in products.values():
-        (output / f"{snapshot['product_id']}.html").write_text(_product_page(snapshot, boards), encoding="utf-8")
-        product_ids_written.add(snapshot["product_id"])
-    return {"output": str(output), "pages": 1 + len(product_ids_written), "products": len(product_ids_written), "leaderboards": len(boards)}
+    subject_ids_written: set[str] = set()
+    for subject_id, snapshot in subjects.items():
+        (output / f"{subject_id}.html").write_text(
+            _product_page(snapshot, boards), encoding="utf-8"
+        )
+        subject_ids_written.add(subject_id)
+    return {
+        "output": str(output),
+        "pages": 1 + len(subject_ids_written),
+        "subjects": len(subject_ids_written),
+        "products": len(
+            [item for item in subjects.values() if item["subject_kind"] == "product"]
+        ),
+        "workflows": len(
+            [item for item in subjects.values() if item["subject_kind"] == "workflow"]
+        ),
+        "leaderboards": len(boards),
+    }

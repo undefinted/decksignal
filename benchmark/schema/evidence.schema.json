@@ -3,12 +3,25 @@
   "$id": "https://openpptbench.org/schema/evidence.schema.json",
   "title": "Normalized evaluation evidence",
   "type": "object",
-  "required": ["schema_version", "evidence_id", "product_snapshot_id", "source", "scope", "observation", "provenance"],
+  "required": ["schema_version", "evidence_id", "source", "scope", "observation", "provenance"],
+  "oneOf": [
+    {"required": ["product_snapshot_id"]},
+    {"required": ["subject"]}
+  ],
   "additionalProperties": false,
   "properties": {
     "schema_version": {"const": "0.2.0-draft"},
     "evidence_id": {"type": "string"},
     "product_snapshot_id": {"type": "string"},
+    "subject": {
+      "type": "object",
+      "required": ["kind", "snapshot_id"],
+      "properties": {
+        "kind": {"enum": ["product", "workflow"]},
+        "snapshot_id": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
     "source": {
       "type": "object",
       "required": ["name", "type", "version"],
@@ -60,4 +73,3 @@
     }
   }
 }
-

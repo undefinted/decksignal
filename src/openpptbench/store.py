@@ -36,13 +36,19 @@ def index_by(records: list[dict[str, Any]], key: str) -> dict[str, dict[str, Any
     return indexed
 
 
-def latest_product_snapshots(records: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+def latest_snapshots(
+    records: list[dict[str, Any]], id_key: str
+) -> dict[str, dict[str, Any]]:
     latest: dict[str, dict[str, Any]] = {}
     for record in records:
-        product_id = record["product_id"]
-        current = latest.get(product_id)
+        subject_id = record[id_key]
+        current = latest.get(subject_id)
         if current is None or datetime.fromisoformat(
             record["observed_at"].replace("Z", "+00:00")
         ) > datetime.fromisoformat(current["observed_at"].replace("Z", "+00:00")):
-            latest[product_id] = record
+            latest[subject_id] = record
     return latest
+
+
+def latest_product_snapshots(records: list[dict[str, Any]]) -> dict[str, dict[str, Any]]:
+    return latest_snapshots(records, "product_id")

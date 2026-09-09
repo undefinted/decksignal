@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openpptbench.org/schema/recommendation-source.schema.json",
+  "title": "Online recommendation or method source",
+  "type": "object",
+  "required": ["schema_version", "source_id", "platform", "url", "captured_at", "access_status", "claims"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "0.3.0-draft"},
+    "source_id": {"type": "string"},
+    "platform": {"type": "string"},
+    "url": {"type": "string", "format": "uri"},
+    "captured_at": {"type": "string", "format": "date-time"},
+    "access_status": {"enum": ["captured", "partial", "inaccessible", "removed"]},
+    "title": {"type": ["string", "null"]},
+    "author": {"type": ["string", "null"]},
+    "content_type": {"enum": ["video", "article", "post", "repository", "documentation", "other"]},
+    "claims": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["claim", "claim_type"],
+        "properties": {
+          "claim": {"type": "string"},
+          "claim_type": {"enum": ["tool_recommendation", "workflow", "quality", "price", "speed", "feature"]},
+          "verification_status": {"enum": ["unverified", "verified", "contradicted", "not_testable"]}
+        },
+        "additionalProperties": false
+      }
+    },
+    "notes": {"type": "string"}
+  }
+}
+

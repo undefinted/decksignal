@@ -1,0 +1,14 @@
+{
+  "schema_version": "0.3.0-draft",
+  "source_id": "xhs-6a8c16f1000000003400e3ce",
+  "platform": "小红书",
+  "url": "https://www.xiaohongshu.com/explore/6a8c16f1000000003400e3ce",
+  "captured_at": "2026-09-09T00:00:00Z",
+  "access_status": "inaccessible",
+  "title": null,
+  "author": null,
+  "content_type": "video",
+  "claims": [],
+  "notes": "公开网页返回‘页面不见了’，搜索引擎无缓存；等待作者标题、截图或视频转写后再提取工作流。"
+}
+

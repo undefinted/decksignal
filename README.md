@@ -1,8 +1,8 @@
 # OpenPPTBench
 
-OpenPPTBench is an open evaluation observatory for AI presentation products. It continuously discovers tools, runs or imports multiple compatible benchmarks, preserves the evidence behind every result, and publishes versioned, scenario-aware rankings.
+OpenPPTBench is an open evaluation observatory for AI presentation tools **and production workflows**. It continuously discovers products and online methods, runs or imports multiple compatible benchmarks, preserves the evidence behind every result, and publishes versioned, scenario-aware rankings.
 
-It is not intended to replace every presentation benchmark. It provides the integration layer between benchmark projects, commercial products, reproducible test runs, human preference studies, and users trying to choose the right tool.
+It is not intended to replace every presentation benchmark. It provides the integration layer between benchmark projects, commercial products, multi-tool recipes, reproducible test runs, human preference studies, and users trying to choose the right way to make a deck.
 
 ## Principles
 
@@ -56,12 +56,14 @@ openpptbench import-csv upstream.csv \
 # Build confidence-, coverage-, and freshness-aware rankings
 openpptbench rank data/evidence \
   --products data/products \
+  --workflows data/workflows \
   --config benchmark/config/capabilities-v0.2.yaml \
   --output public/rankings.json
 
 # Generate a static comparison site
 openpptbench build-site public/rankings.json \
   --products data/products \
+  --workflows data/workflows \
   --output-dir public/site
 
 # Monitor registered products and discover open-source candidates

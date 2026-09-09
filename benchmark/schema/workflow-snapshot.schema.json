@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://openpptbench.org/schema/workflow-snapshot.schema.json",
+  "title": "Versioned presentation workflow snapshot",
+  "type": "object",
+  "required": ["schema_version", "snapshot_id", "workflow_id", "name", "observed_at", "status", "source_refs", "steps", "output_type"],
+  "additionalProperties": false,
+  "properties": {
+    "schema_version": {"const": "0.3.0-draft"},
+    "snapshot_id": {"type": "string"},
+    "workflow_id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "name": {"type": "string"},
+    "observed_at": {"type": "string", "format": "date-time"},
+    "status": {"enum": ["discovered", "documented", "queued", "evaluated", "stale", "archived"]},
+    "source_refs": {"type": "array", "minItems": 1, "items": {"type": "string"}},
+    "steps": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["order", "action", "actor"],
+        "properties": {
+          "order": {"type": "integer", "minimum": 1},
+          "action": {"type": "string"},
+          "actor": {"enum": ["human", "ai", "mixed"]},
+          "component": {"type": ["string", "null"]},
+          "estimated_minutes": {"type": ["number", "null"], "minimum": 0}
+        },
+        "additionalProperties": false
+      }
+    },
+    "input_type": {"type": "string"},
+    "output_type": {"enum": ["pptx", "pdf", "images", "web", "mixed"]},
+    "manual_effort_level": {"enum": ["low", "medium", "high", "unknown"]},
+    "notes": {"type": "string"}
+  }
+}
+

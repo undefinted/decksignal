@@ -15,6 +15,16 @@
 - [ ] Add a discovery inbox and verification queue.
 - [ ] Publish the first scenario leaderboard from qualifying evidence.
 
+## v0.3 — tools and production workflows
+
+- [x] Add online recommendation-source capture without treating claims as scores.
+- [x] Add versioned multi-tool workflow snapshots.
+- [x] Allow products and workflows as distinct ranking subjects.
+- [x] Preserve backward compatibility with product-only evidence.
+- [ ] Transcribe and document the first three externally recommended workflows.
+- [ ] Pilot active-human-time, total-time, tool-count, and cost measurements.
+- [ ] Add workflow lineage so component updates mark dependent results stale.
+
 ## v0.1 — reproducible baseline
 
 - [x] Publish scope, generation protocol, and limitations.

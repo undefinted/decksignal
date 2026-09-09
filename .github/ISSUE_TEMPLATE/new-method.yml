@@ -1,0 +1,31 @@
+name: Submit a PPT production method
+description: Propose a tutorial, tool combination, prompt recipe, or workflow for verification
+title: "[Method] "
+labels: ["workflow-discovery"]
+body:
+  - type: input
+    id: source
+    attributes:
+      label: Source URL
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Reproducible steps
+      description: List tools, prompts, settings, human edits, and output type.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Example result or evidence
+    validations:
+      required: false
+  - type: textarea
+    id: disclosure
+    attributes:
+      label: Relationship disclosure
+      description: State sponsorship, affiliate links, employment, investment, or other affiliation.
+    validations:
+      required: true

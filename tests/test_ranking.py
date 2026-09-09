@@ -128,3 +128,44 @@ def test_current_board_excludes_historical_product_snapshot(tmp_path):
 
     assert len(rows) == 1
     assert rows[0]["snapshot_id"] == "alpha__2026-09-01"
+
+
+def test_workflow_can_be_ranked_as_a_distinct_subject(tmp_path):
+    products_dir = tmp_path / "products"
+    products_dir.mkdir()
+    workflow = {
+        "schema_version": "0.3.0-draft",
+        "snapshot_id": "outline-image-layout__2026-09-01",
+        "workflow_id": "outline-image-layout",
+        "name": "大纲＋配图＋排版工作流",
+        "observed_at": "2026-09-01T00:00:00Z",
+        "status": "evaluated",
+        "source_refs": ["https://example.com/method"],
+        "steps": [{"order": 1, "action": "生成大纲", "actor": "ai"}],
+        "output_type": "pptx",
+    }
+    workflows = write_json(tmp_path / "workflows.json", workflow)
+    record = evidence(
+        "content_grounding",
+        88,
+        evidence_id="workflow-score",
+        snapshot_id="unused",
+    )
+    record.pop("product_snapshot_id")
+    record["subject"] = {
+        "kind": "workflow",
+        "snapshot_id": "outline-image-layout__2026-09-01",
+    }
+    evidence_path = write_json(tmp_path / "evidence.json", record)
+
+    result = build_rankings(
+        evidence_path,
+        products_dir,
+        _config(tmp_path),
+        workflow_path=workflows,
+        as_of=datetime(2026, 9, 6, tzinfo=timezone.utc),
+    )
+    row = result["leaderboards"]["overall"]["rows"][0]
+
+    assert row["subject_kind"] == "workflow"
+    assert row["subject_id"] == "outline-image-layout"

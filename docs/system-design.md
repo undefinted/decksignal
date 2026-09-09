@@ -4,21 +4,21 @@
 
 OpenPPTBench is a meta-evaluation and market-observation system. It answers four questions:
 
-1. Which AI presentation products currently exist, and what changed recently?
+1. Which AI presentation products and production methods currently exist, and what changed recently?
 2. Which capabilities has each product actually been tested on?
 3. What do independent benchmarks, local reproducible runs, experts, and users each conclude?
-4. Which product is best for a specific user, scenario, language, and output requirement today?
+4. Which tool or workflow is best for a specific user, scenario, language, and output requirement today?
 
 The system must not imply that scores from unrelated benchmarks are directly comparable.
 
 ## System layers
 
 ```text
-Official sites / release notes / repositories / community submissions
+Official sites / release notes / repositories / tutorials / community posts
                               |
                     discovery and verification
                               |
-                     versioned tool registry
+               versioned tool and workflow registries
                               |
         +---------------------+---------------------+
         |                     |                     |
@@ -38,6 +38,8 @@ Official sites / release notes / repositories / community submissions
 Discovery produces candidates, not facts. A candidate can originate from an official release, repository, app marketplace, product submission, or community report. Before appearing as a verified product, an editor or automated verifier confirms its canonical URL, provider, availability, output modes, and last-seen date.
 
 Product facts must carry field-level provenance. Price, free limits, export formats, and model versions change independently and should not share one blanket `verified_at` value.
+
+Online recommendations are stored separately from verified workflows. A tutorial or social post provides claims and candidate steps; it becomes an evaluable workflow only after the steps, components, inputs, outputs, manual intervention, and version assumptions can be reproduced.
 
 Suggested states:
 
@@ -83,6 +85,26 @@ The normalized model uses capabilities rather than benchmark names:
 | value | price, free limits, watermarks, usable output per unit cost |
 
 Scores are reported per capability and per scenario. Missing capabilities remain missing; they are never filled with a neutral value.
+
+## Workflow subjects
+
+A workflow may combine multiple tools and human actions, for example:
+
+```text
+LLM research → outline generation → image/diagram generation → slide assembly → manual polish
+```
+
+Workflow evaluation records:
+
+- exact step order and prompts;
+- model and product versions for every component;
+- human versus automated actions;
+- wall-clock time, active human time, and monetary cost;
+- intermediate artifacts;
+- final artifact type and editability;
+- failure and retry behavior.
+
+Products and workflows may appear in the same scenario comparison, but the interface must visibly distinguish them. A workflow score never transfers to each component product.
 
 ## 4. Evidence hierarchy
 
@@ -141,4 +163,3 @@ Minimum pages:
 - `/changes`: newly discovered tools and material ranking changes.
 
 Every displayed score should link back to the evidence records that produced it.
-

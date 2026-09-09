@@ -20,10 +20,12 @@ jobs:
       - run: openpptbench validate submissions/example.evidence.json --schema benchmark/schema/evidence.schema.json
       - run: openpptbench validate data/products --schema benchmark/schema/product-snapshot.schema.json
       - run: openpptbench validate data/discovery/example.json --schema benchmark/schema/discovery.schema.json
+      - run: openpptbench validate data/recommendations --schema benchmark/schema/recommendation-source.schema.json
       - run: >-
           openpptbench rank data/evidence
           --products data/products
+          --workflows data/workflows
           --config benchmark/config/capabilities-v0.2.yaml
           --as-of 2026-09-06T00:00:00Z
           --output public/rankings.json
-      - run: openpptbench build-site public/rankings.json --products data/products --output-dir public/site
+      - run: openpptbench build-site public/rankings.json --products data/products --workflows data/workflows --output-dir public/site
