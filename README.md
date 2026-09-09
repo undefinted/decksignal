@@ -2,6 +2,8 @@
 
 OpenPPTBench is an open evaluation observatory for AI presentation tools **and production workflows**. It continuously discovers products and online methods, runs or imports multiple compatible benchmarks, preserves the evidence behind every result, and publishes versioned, scenario-aware rankings.
 
+The current seed catalog contains **16 deduplicated workflows** sourced from Xiaohongshu, Bilibili, YouTube, official product documentation, and open-source repositories. The generated site includes a searchable method library. Cataloged tutorials are not treated as proven claims: only entries marked `evaluated` have completed the common test protocol.
+
 It is not intended to replace every presentation benchmark. It provides the integration layer between benchmark projects, commercial products, multi-tool recipes, reproducible test runs, human preference studies, and users trying to choose the right way to make a deck.
 
 ## Principles
@@ -71,6 +73,8 @@ openpptbench check-products data/products --output monitoring-output/product-hea
 openpptbench discover-github --query 'topic:ai-presentation' \
   --output monitoring-output/discoveries.json
 ```
+
+Open `public/site/methods.html` to browse and filter methods by status, output format, and manual effort. Each detail page retains source links, normalized steps, inputs, outputs, and caveats.
 
 Imported scores affect a leaderboard only when their normalized mapping, provenance, product snapshot, and evidence coverage satisfy that leaderboard's published policy.
 
