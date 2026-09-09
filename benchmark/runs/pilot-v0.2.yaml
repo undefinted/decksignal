@@ -1,0 +1,34 @@
+version: "0.2.0-draft"
+as_of: "2026-09-09"
+purpose: "First cross-paradigm execution after landscape research"
+rules:
+  attempts_per_task: 1
+  rerun_only_on_documented_technical_failure: true
+  manual_editing_during_main_run: false
+  preserve_native_artifact: true
+  preserve_rendered_slides: true
+  record_price_time_and_access: true
+tracks:
+  - id: closed-source-native
+    candidates: [microsoft-copilot-powerpoint, wps-ai-slides, plus-ai]
+    access_gate: "Requires a valid account or subscription; never substitute vendor demos for runs."
+  - id: closed-source-generator
+    candidates: [kimi-slides, gamma, canva-magic-design, beautiful-ai, slidesai]
+    access_gate: "Use available free credits first and record the exact plan."
+  - id: open-source
+    candidates: [presenton, pptxgenjs-llm]
+    access_gate: "Pin repository commit, runtime, model, and dependencies."
+  - id: image-first
+    candidates: [image-first-reconstruction]
+    access_gate: "Score source images and reconstructed PPTX separately."
+tasks:
+  - opb-business-001
+  - opb-education-001
+  - opb-product-001
+evaluation_layers:
+  content: [presentbench_checklists, grounding_checks]
+  visual: [slidesgen_bench, expert_rubric, blinded_pairwise]
+  structure: [native_pptx_inspector, gloss]
+  editing: [deckbench, pptc, pptarena]
+  operations: [success_rate, wall_time, manual_minutes, monetary_cost, privacy_notes]
+promotion_rule: "A candidate enters a published score table only after artifacts, manifests, and all mandatory evidence layers validate."

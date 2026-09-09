@@ -67,6 +67,7 @@ openpptbench build-site public/rankings.json \
   --products data/products \
   --workflows data/workflows \
   --sources data/sources/catalog-v0.1.json \
+  --research data/research/landscape-v0.1.json \
   --output-dir public/site
 
 # Monitor registered products and discover open-source candidates

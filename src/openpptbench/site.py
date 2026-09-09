@@ -26,7 +26,7 @@ footer{margin-top:42px;color:#667085;font-size:13px}@media(max-width:700px){.her
 
 
 def _page(title: str, body: str) -> str:
-    return f"""<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)}</title><link rel="stylesheet" href="assets/style.css"></head><body><div class="wrap"><header><a class="brand" href="index.html">OpenPPTBench</a><nav class="topnav"><a href="methods.html">方法库</a><span class="muted">开放、可追溯、持续更新</span></nav></header>{body}<footer>所有分数均应链接到证据。发现与整理不等于实测；未达到覆盖门槛的对象不参与正式排名。</footer></div></body></html>"""
+    return f"""<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)}</title><link rel="stylesheet" href="assets/style.css"></head><body><div class="wrap"><header><a class="brand" href="index.html">OpenPPTBench</a><nav class="topnav"><a href="research.html">工具全景</a><a href="methods.html">方法库</a><span class="muted">开放、可追溯、持续更新</span></nav></header>{body}<footer>所有分数均应链接到证据。发现与整理不等于实测；未达到覆盖门槛的对象不参与正式排名。</footer></div></body></html>"""
 
 
 def _board_table(board: dict[str, Any]) -> str:
@@ -98,6 +98,18 @@ def _methods_page(workflows: list[dict[str, Any]]) -> str:
     return _page("AI PPT 方法库", body)
 
 
+def _research_page(research: dict[str, Any]) -> str:
+    rows = []
+    for item in research.get("entries", []):
+        rows.append(
+            f'<tr data-route="{html.escape(item["route"])}" data-priority="{html.escape(item["test_priority"])}"><td><a href="{html.escape(item["url"])}"><strong>{html.escape(item["name"])}</strong></a></td><td>{html.escape(item["route"])}</td><td>{html.escape(", ".join(item["inputs"]))}</td><td>{html.escape(", ".join(item["outputs"]))}</td><td>{html.escape(item["access"])}</td><td>{html.escape(item["evidence"])}</td><td>{html.escape(item["test_priority"])}</td></tr>'
+        )
+    routes = sorted({item["route"] for item in research.get("entries", [])})
+    options = "".join(f'<option>{html.escape(route)}</option>' for route in routes)
+    body = f'''<div class="hero"><h1>AI PPT 工具与路线全景</h1><p>截至 {html.escape(research["as_of"])} 的版本化长名单。收录表示进入调研范围，不代表通过实测。</p></div><div class="card"><p><strong>{len(rows)} 个候选对象</strong>，覆盖原生办公、独立生成器、设计平台、多工具流水线、代码生成和论文转演示。<a href="https://github.com/">阅读完整调研报告（仓库 docs）</a></p><div class="filters"><select id="route"><option value="">全部路线</option>{options}</select><select id="priority"><option value="">全部优先级</option><option>P0</option><option>P1</option><option>P2</option></select><strong id="research-count">{len(rows)} 个候选</strong></div></div><div style="overflow:auto"><table><thead><tr><th>工具/方法</th><th>路线</th><th>输入</th><th>输出</th><th>访问</th><th>证据</th><th>队列</th></tr></thead><tbody>{"".join(rows)}</tbody></table></div><script>const rr=[...document.querySelectorAll('tbody tr')],route=document.querySelector('#route'),priority=document.querySelector('#priority'),rc=document.querySelector('#research-count');function rf(){{let n=0;rr.forEach(x=>{{const ok=(!route.value||x.dataset.route===route.value)&&(!priority.value||x.dataset.priority===priority.value);x.hidden=!ok;if(ok)n++}});rc.textContent=n+' 个候选'}}[route,priority].forEach(x=>x.addEventListener('input',rf));</script>'''
+    return _page("AI PPT 工具与路线全景", body)
+
+
 def build_site(
     rankings_path: str | Path,
     products_path: str | Path,
@@ -105,6 +117,7 @@ def build_site(
     *,
     workflows_path: str | Path | None = None,
     sources_path: str | Path | None = None,
+    research_path: str | Path | None = None,
 ) -> dict[str, Any]:
     rankings = json.loads(Path(rankings_path).read_text(encoding="utf-8"))
     product_records = load_json_records(products_path)
@@ -144,6 +157,10 @@ def build_site(
     body = f'<div class="hero"><h1>AI PPT 动态评测榜</h1><p>聚合独立 benchmark、本地可复现评测和盲评证据；同时呈现分数、覆盖度与证据状态。</p></div><nav class="tabs">{tabs}</nav>{sections}'
     (output / "index.html").write_text(_page("AI PPT 动态评测榜", body), encoding="utf-8")
     (output / "methods.html").write_text(_methods_page(latest_workflows), encoding="utf-8")
+    research = {"as_of": "未提供", "entries": []}
+    if research_path is not None:
+        research = json.loads(Path(research_path).read_text(encoding="utf-8"))
+    (output / "research.html").write_text(_research_page(research), encoding="utf-8")
 
     subject_ids_written: set[str] = set()
     for subject_id, snapshot in subjects.items():
@@ -153,7 +170,7 @@ def build_site(
         subject_ids_written.add(subject_id)
     return {
         "output": str(output),
-        "pages": 2 + len(subject_ids_written),
+        "pages": 3 + len(subject_ids_written),
         "subjects": len(subject_ids_written),
         "products": len(
             [item for item in subjects.values() if item["subject_kind"] == "product"]

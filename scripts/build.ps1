@@ -17,6 +17,6 @@ Invoke-Checked { & $ProjectPython -m openpptbench.cli validate data/recommendati
 Invoke-Checked { & $ProjectPython -m openpptbench.cli validate data/workflows --schema benchmark/schema/workflow-snapshot.schema.json }
 Invoke-Checked { & $ProjectPython -m openpptbench.cli validate data/sources/catalog-v0.1.json --schema benchmark/schema/source-catalog.schema.json }
 Invoke-Checked { & $ProjectPython -m openpptbench.cli rank data/evidence --products data/products --workflows data/workflows --config benchmark/config/capabilities-v0.2.yaml --output public/rankings.json }
-Invoke-Checked { & $ProjectPython -m openpptbench.cli build-site public/rankings.json --products data/products --workflows data/workflows --sources data/sources/catalog-v0.1.json --output-dir public/site }
+Invoke-Checked { & $ProjectPython -m openpptbench.cli build-site public/rankings.json --products data/products --workflows data/workflows --sources data/sources/catalog-v0.1.json --research data/research/landscape-v0.1.json --output-dir public/site }
 
 Write-Host "Build complete: public/site/index.html"
