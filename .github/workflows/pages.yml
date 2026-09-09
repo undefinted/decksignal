@@ -33,6 +33,7 @@ jobs:
           openpptbench build-site public/rankings.json
           --products data/products
           --workflows data/workflows
+          --sources data/sources/catalog-v0.1.json
           --output-dir public/site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

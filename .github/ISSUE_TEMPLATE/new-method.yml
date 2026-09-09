@@ -16,6 +16,20 @@ body:
       description: List tools, prompts, settings, human edits, and output type.
     validations:
       required: true
+  - type: input
+    id: creator
+    attributes:
+      label: Creator or publisher
+      description: Use the account or organization name shown at the source.
+    validations:
+      required: false
+  - type: input
+    id: published
+    attributes:
+      label: Publication date
+      description: Use YYYY-MM-DD when available; do not guess.
+    validations:
+      required: false
   - type: textarea
     id: result
     attributes:
@@ -27,5 +41,16 @@ body:
     attributes:
       label: Relationship disclosure
       description: State sponsorship, affiliate links, employment, investment, or other affiliation.
+    validations:
+      required: true
+  - type: dropdown
+    id: rights
+    attributes:
+      label: Reuse permission
+      description: Linking and attribution do not grant permission to copy media, prompts, or templates.
+      options:
+        - Link only / unknown
+        - Reuse license is stated at the source
+        - Permission granted by the rights holder
     validations:
       required: true

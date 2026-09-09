@@ -43,7 +43,17 @@ def _board_table(board: dict[str, Any]) -> str:
     return "<table><thead><tr><th>#</th><th>产品</th><th>分数</th><th>覆盖度</th><th class=\"hide-sm\">来源</th><th>状态</th></tr></thead><tbody>" + "".join(rows) + "</tbody></table>"
 
 
-def _product_page(product: dict[str, Any], boards: dict[str, Any]) -> str:
+def _source_block(ref: str, sources: dict[str, dict[str, Any]]) -> str:
+    source = sources.get(ref) or next((item for item in sources.values() if item["url"] == ref), None)
+    if source is None:
+        return f'<li><a href="{html.escape(ref)}">{html.escape(ref)}</a> <span class="wait">（元数据待补）</span></li>' if ref.startswith("http") else f'<li>{html.escape(ref)} <span class="wait">（元数据待补）</span></li>'
+    author = source.get("author") or "作者待核实"
+    published = source.get("published_at") or "发布日期待核实"
+    supports = "；".join(source.get("supports", []))
+    return f'<li><a href="{html.escape(source["url"])}"><strong>{html.escape(source["title"])}</strong></a><br><span class="muted">{html.escape(source["platform"])} · {html.escape(author)} · {html.escape(published)} · 收录 {html.escape(source["accessed_at"])} · {html.escape(source.get("evidence_nature", "未分类"))} · {html.escape(source["rights"])}</span><br>支持内容：{html.escape(supports)}</li>'
+
+
+def _product_page(product: dict[str, Any], boards: dict[str, Any], sources: dict[str, dict[str, Any]]) -> str:
     appearances = []
     for board in boards.values():
         for row in board["rows"]:
@@ -64,11 +74,11 @@ def _product_page(product: dict[str, Any], boards: dict[str, Any]) -> str:
             f'<li><strong>{step["order"]}.</strong> {html.escape(step["action"])} <span class="muted">（{html.escape(step["actor"])} · {html.escape(step.get("component") or "未注明")}）</span></li>'
             for step in product.get("steps", [])
         )
-        sources = "".join(
-            f'<li><a href="{html.escape(ref)}">{html.escape(ref)}</a></li>' if ref.startswith("http") else f'<li>{html.escape(ref)}</li>'
+        source_items = "".join(
+            _source_block(ref, sources)
             for ref in product.get("source_refs", [])
         )
-        body += f'<section class="card"><h2>方法步骤</h2><ol class="steps">{steps}</ol><p><strong>输入：</strong>{html.escape(product.get("input_type", "未注明"))} · <strong>输出：</strong>{html.escape(product["output_type"])} · <strong>人工投入：</strong>{html.escape(product.get("manual_effort_level", "unknown"))}</p><p>{html.escape(product.get("notes", ""))}</p><h3>来源</h3><ul class="sources">{sources}</ul></section>'
+        body += f'<section class="card"><h2>方法步骤</h2><ol class="steps">{steps}</ol><p><strong>输入：</strong>{html.escape(product.get("input_type", "未注明"))} · <strong>输出：</strong>{html.escape(product["output_type"])} · <strong>人工投入：</strong>{html.escape(product.get("manual_effort_level", "unknown"))}</p><p>{html.escape(product.get("notes", ""))}</p><h3>来源与归属</h3><ul class="sources">{source_items}</ul><p class="muted">仅作引用、归纳与独立评测；原作品及商标权利归相应权利人。来源标注不代表原作者认可本项目。</p></section>'
     body += "".join(appearances) or '<div class="card"><p>该对象尚无统一任务下的评测证据。</p></div>'
     return _page(product["name"], body)
 
@@ -94,6 +104,7 @@ def build_site(
     output_dir: str | Path,
     *,
     workflows_path: str | Path | None = None,
+    sources_path: str | Path | None = None,
 ) -> dict[str, Any]:
     rankings = json.loads(Path(rankings_path).read_text(encoding="utf-8"))
     product_records = load_json_records(products_path)
@@ -112,6 +123,16 @@ def build_site(
         )
     else:
         latest_workflows = []
+    sources: dict[str, dict[str, Any]] = {}
+    if sources_path is not None:
+        catalog = json.loads(Path(sources_path).read_text(encoding="utf-8"))
+        sources = {item["source_id"]: item for item in catalog["sources"]}
+        known_refs = set(sources) | {item["url"] for item in sources.values()}
+        unresolved = sorted(
+            {ref for workflow in latest_workflows for ref in workflow.get("source_refs", []) if ref not in known_refs}
+        )
+        if unresolved:
+            raise ValueError("Unresolved workflow source references: " + ", ".join(unresolved))
     output = Path(output_dir)
     (output / "assets").mkdir(parents=True, exist_ok=True)
     (output / "assets" / "style.css").write_text(STYLE.strip() + "\n", encoding="utf-8")
@@ -127,7 +148,7 @@ def build_site(
     subject_ids_written: set[str] = set()
     for subject_id, snapshot in subjects.items():
         (output / f"{subject_id}.html").write_text(
-            _product_page(snapshot, boards), encoding="utf-8"
+            _product_page(snapshot, boards, sources), encoding="utf-8"
         )
         subject_ids_written.add(subject_id)
     return {

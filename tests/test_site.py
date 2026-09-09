@@ -1,5 +1,6 @@
 import json
 
+import pytest
 from helpers import product, write_json
 
 from openpptbench.site import build_site
@@ -67,9 +68,32 @@ def test_methods_page_contains_filters_and_workflow_details(tmp_path):
             "notes": "仅用于测试",
         },
     )
+    sources_path = write_json(
+        tmp_path / "sources.json",
+        {
+            "schema_version": "0.4.0-draft",
+            "sources": [{
+                "source_id": "example",
+                "platform": "Example",
+                "url": "https://example.com/tutorial",
+                "title": "Example tutorial",
+                "author": "Example author",
+                "published_at": "2026-09-01",
+                "content_type": "article",
+                "accessed_at": "2026-09-09",
+                "access_status": "captured",
+                "supports": ["示例步骤"],
+                "evidence_nature": "independent_observation",
+                "rights": "link_only",
+                "license": None,
+                "notes": "",
+            }],
+        },
+    )
 
     result = build_site(
-        rankings_path, products_path, tmp_path / "site", workflows_path=workflows
+        rankings_path, products_path, tmp_path / "site", workflows_path=workflows,
+        sources_path=sources_path,
     )
     catalog = (tmp_path / "site" / "methods.html").read_text(encoding="utf-8")
     detail = (tmp_path / "site" / "method.html").read_text(encoding="utf-8")
@@ -77,4 +101,14 @@ def test_methods_page_contains_filters_and_workflow_details(tmp_path):
     assert result["workflows"] == 1
     assert "全部状态" in catalog
     assert "示例方法" in catalog
-    assert "https://example.com/tutorial" in detail
+    assert "Example author" in detail
+    assert "支持内容：示例步骤" in detail
+
+    bad_sources = write_json(
+        tmp_path / "bad-sources.json", {"schema_version": "0.4.0-draft", "sources": []}
+    )
+    with pytest.raises(ValueError, match="Unresolved workflow source references"):
+        build_site(
+            rankings_path, products_path, tmp_path / "bad-site", workflows_path=workflows,
+            sources_path=bad_sources,
+        )
