@@ -1,10 +1,12 @@
-# OpenPPTBench
+# DeckSignal
 
-OpenPPTBench is an open evaluation observatory for AI presentation tools **and production workflows**. It continuously discovers products and online methods, runs or imports multiple compatible benchmarks, preserves the evidence behind every result, and publishes versioned, scenario-aware rankings.
+**Find the signal in AI presentations.**
+
+DeckSignal（AI 演示智鉴）is an open presentation-intelligence project for AI presentation tools **and production workflows**. It continuously discovers products and online methods, runs or imports compatible benchmarks, preserves the evidence behind every result, and publishes versioned, scenario-aware rankings.
 
 The current seed catalog contains **16 deduplicated workflows** sourced from Xiaohongshu, Bilibili, YouTube, official product documentation, and open-source repositories. The generated site includes a searchable method library. Cataloged tutorials are not treated as proven claims: only entries marked `evaluated` have completed the common test protocol.
 
-It is not intended to replace every presentation benchmark. It provides the integration layer between benchmark projects, commercial products, multi-tool recipes, reproducible test runs, human preference studies, and users trying to choose the right way to make a deck.
+DeckSignal is not intended to replace every presentation benchmark. Its internal evaluation engine, **OpenPPTBench**, provides the integration layer between benchmark projects, commercial products, multi-tool recipes, reproducible test runs, human preference studies, and users trying to choose the right way to make a deck.
 
 ## Principles
 
@@ -38,9 +40,9 @@ python -m venv .venv
 .venv/Scripts/activate
 pip install -e .[dev]
 
-openpptbench validate benchmark/tasks
-openpptbench inspect path/to/deck.pptx --output results/raw/deck.metrics.json
-openpptbench aggregate results/submissions.json --output results/leaderboard/leaderboard.json
+decksignal validate benchmark/tasks
+decksignal inspect path/to/deck.pptx --output results/raw/deck.metrics.json
+decksignal aggregate results/submissions.json --output results/leaderboard/leaderboard.json
 pytest
 ```
 
@@ -50,20 +52,20 @@ On macOS/Linux, activate the environment with `source .venv/bin/activate`.
 
 ```bash
 # Import a normalized export produced by an upstream benchmark adapter
-openpptbench import-csv upstream.csv \
+decksignal import-csv upstream.csv \
   --source slidesgen-bench \
   --source-version <pinned-commit> \
   --output-dir data/evidence
 
 # Build confidence-, coverage-, and freshness-aware rankings
-openpptbench rank data/evidence \
+decksignal rank data/evidence \
   --products data/products \
   --workflows data/workflows \
   --config benchmark/config/capabilities-v0.2.yaml \
   --output public/rankings.json
 
 # Generate a static comparison site
-openpptbench build-site public/rankings.json \
+decksignal build-site public/rankings.json \
   --products data/products \
   --workflows data/workflows \
   --sources data/sources/catalog-v0.1.json \
@@ -71,8 +73,8 @@ openpptbench build-site public/rankings.json \
   --output-dir public/site
 
 # Monitor registered products and discover open-source candidates
-openpptbench check-products data/products --output monitoring-output/product-health.json
-openpptbench discover-github --query 'topic:ai-presentation' \
+decksignal check-products data/products --output monitoring-output/product-health.json
+decksignal discover-github --query 'topic:ai-presentation' \
   --output monitoring-output/discoveries.json
 ```
 
@@ -99,7 +101,7 @@ The first real-world execution is defined in the [pilot runbook](docs/pilot-runb
 
 ```text
 benchmark/          Versioned tasks, rubrics, and schemas
-src/openpptbench/   Evaluation and aggregation CLI
+src/openpptbench/   OpenPPTBench evaluation engine and DeckSignal CLI
 tests/              Unit and integration tests
 results/            Raw and normalized evaluation outputs
 docs/               Methodology and contribution documentation
@@ -108,7 +110,7 @@ website/            Placeholder for the public comparison UI
 
 ## What the benchmark does not claim
 
-OpenPPTBench does not claim that one product is universally “best.” Rankings depend on scenario, product version, plan, locale, and evaluation date. Automated visual heuristics are diagnostic signals, not aesthetic truth.
+DeckSignal does not claim that one product is universally “best.” Rankings depend on scenario, product version, plan, locale, and evaluation date. Automated visual heuristics are diagnostic signals, not aesthetic truth.
 
 ## License
 

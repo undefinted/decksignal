@@ -16,7 +16,7 @@ from .store import load_json_records
 def _check_one(product: dict[str, Any], timeout: float) -> dict[str, Any]:
     request = urllib.request.Request(
         product["canonical_url"],
-        headers={"User-Agent": "OpenPPTBench-Monitor/0.2 (+https://github.com/)"},
+        headers={"User-Agent": "DeckSignal-Monitor/0.2 (+https://github.com/)"},
         method="HEAD",
     )
     try:
@@ -76,7 +76,7 @@ def discover_github(
     token = token or os.environ.get("GITHUB_TOKEN")
     headers = {
         "Accept": "application/vnd.github+json",
-        "User-Agent": "OpenPPTBench-Discovery/0.2",
+        "User-Agent": "DeckSignal-Discovery/0.2",
         "X-GitHub-Api-Version": "2022-11-28",
     }
     if token:

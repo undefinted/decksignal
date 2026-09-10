@@ -1,5 +1,10 @@
 # Changelog
 
+## Unreleased
+
+- Renamed the public project and website to DeckSignal (AI 演示智鉴).
+- Retained OpenPPTBench as the internal evaluation engine and legacy CLI alias.
+
 ## 0.3.0-draft
 
 - Expanded evaluation subjects from individual products to multi-tool production workflows.

@@ -48,8 +48,8 @@ sources:
     url: https://www.slidebench.org/methodology
     adapter_status: research
     capabilities: [visual_design, native_editability, export_fidelity]
-  - id: openpptbench-local
-    name: OpenPPTBench Chinese product runs
+  - id: decksignal-local
+    name: DeckSignal reproducible product runs
     type: local_run
     url: null
     adapter_status: available

@@ -7,6 +7,5 @@ Before opening a pull request, run:
 ```bash
 ruff check src tests
 pytest
-openpptbench validate benchmark/tasks
+decksignal validate benchmark/tasks
 ```
-

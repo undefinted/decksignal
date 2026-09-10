@@ -2,7 +2,7 @@
 
 ## Product definition
 
-OpenPPTBench is a meta-evaluation and market-observation system. It answers four questions:
+DeckSignal is a presentation-intelligence and market-observation system powered by the OpenPPTBench evaluation engine. It answers four questions:
 
 1. Which AI presentation products and production methods currently exist, and what changed recently?
 2. Which capabilities has each product actually been tested on?
@@ -113,7 +113,7 @@ Evidence type affects confidence, not the observed score itself.
 | Evidence | Default confidence class |
 |---|---|
 | Reproducible run using an official benchmark and preserved artifact | A |
-| Reproducible OpenPPTBench run with complete manifest | A |
+| Reproducible DeckSignal run with complete manifest | A |
 | Independent benchmark result with available artifacts but no local rerun | B |
 | Blinded human comparison with quality controls | B |
 | Expert review with disclosed rubric and reviewer role | B |

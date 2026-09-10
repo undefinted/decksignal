@@ -1,6 +1,6 @@
 # Source attribution and rights notice
 
-OpenPPTBench links to public tutorials, posts, videos, documentation, products, and repositories in order to describe and independently evaluate presentation-production methods. Copyright in those source works, including videos, screenshots, slide templates, prompts, articles, and branding, remains with the respective rights holders.
+DeckSignal links to public tutorials, posts, videos, documentation, products, and repositories in order to describe and independently evaluate presentation-production methods. Copyright in those source works, including videos, screenshots, slide templates, prompts, articles, and branding, remains with the respective rights holders.
 
 Unless a source record explicitly states a reusable license or documented permission, the catalog uses `rights: link_only`. The repository should not mirror the source work, extract substantial text, redistribute templates, or imply endorsement by the creator. Method descriptions are original summaries of functional steps. Short factual metadata and links are retained for attribution and traceability.
 

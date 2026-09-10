@@ -24,13 +24,13 @@ jobs:
           python-version: "3.12"
       - run: pip install -e .
       - run: >-
-          openpptbench rank data/evidence
+          decksignal rank data/evidence
           --products data/products
           --workflows data/workflows
           --config benchmark/config/capabilities-v0.2.yaml
           --output public/rankings.json
       - run: >-
-          openpptbench build-site public/rankings.json
+          decksignal build-site public/rankings.json
           --products data/products
           --workflows data/workflows
           --sources data/sources/catalog-v0.1.json

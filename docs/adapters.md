@@ -36,11 +36,10 @@ Optional columns:
 Example:
 
 ```bash
-openpptbench import-csv upstream.csv \
+decksignal import-csv upstream.csv \
   --source slidesgen-bench \
   --source-version <commit-or-release> \
   --output-dir data/evidence
 ```
 
 The importer assumes the adapter author has already performed a justified within-source normalization. It deliberately refuses to guess how an arbitrary upstream scale should map to 0–100.
-

@@ -1,6 +1,6 @@
 # Governance and independence
 
-OpenPPTBench exists to make product evidence inspectable, not to sell leaderboard placement.
+DeckSignal exists to make product evidence inspectable, not to sell leaderboard placement. OpenPPTBench is its internal evaluation engine.
 
 ## Rules
 
@@ -19,4 +19,3 @@ During the initial maintainer phase, methodological decisions are proposed in pu
 ## Security and privacy
 
 Submissions must not contain access tokens, cookies, personal data, customer documents, or confidential prompts. Human-review records use pseudonymous identifiers and should retain only the minimum data needed for quality control.
-

@@ -3,7 +3,7 @@
   "evidence_id": "example-product__opb-business-001__content-grounding",
   "product_snapshot_id": "example-product__2026-09-06",
   "source": {
-    "name": "OpenPPTBench Chinese product runs",
+    "name": "DeckSignal reproducible product runs",
     "type": "local_run",
     "version": "0.1.0",
     "url": null,
@@ -32,4 +32,3 @@
     "notes": "Schema example only; not ranking evidence."
   }
 }
-

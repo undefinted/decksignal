@@ -36,7 +36,7 @@ def test_build_site_creates_index_and_product_pages(tmp_path):
 
     assert result["pages"] == 4
     assert repeated["pages"] == 4
-    assert "AI PPT 动态评测榜" in (tmp_path / "site" / "index.html").read_text(
+    assert "DeckSignal" in (tmp_path / "site" / "index.html").read_text(
         encoding="utf-8"
     )
     assert (tmp_path / "site" / "alpha.html").exists()

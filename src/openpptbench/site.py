@@ -26,7 +26,7 @@ footer{margin-top:42px;color:#667085;font-size:13px}@media(max-width:700px){.her
 
 
 def _page(title: str, body: str) -> str:
-    return f"""<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)}</title><link rel="stylesheet" href="assets/style.css"></head><body><div class="wrap"><header><a class="brand" href="index.html">OpenPPTBench</a><nav class="topnav"><a href="research.html">工具全景</a><a href="methods.html">方法库</a><span class="muted">开放、可追溯、持续更新</span></nav></header>{body}<footer>所有分数均应链接到证据。发现与整理不等于实测；未达到覆盖门槛的对象不参与正式排名。</footer></div></body></html>"""
+    return f"""<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{html.escape(title)} · DeckSignal</title><link rel="stylesheet" href="assets/style.css"></head><body><div class="wrap"><header><a class="brand" href="index.html">DeckSignal</a><nav class="topnav"><a href="research.html">工具全景</a><a href="methods.html">方法库</a><span class="muted">AI 演示智鉴</span></nav></header>{body}<footer>所有分数均应链接到证据。发现与整理不等于实测；未达到覆盖门槛的对象不参与正式排名。评测由 OpenPPTBench 引擎驱动。</footer></div></body></html>"""
 
 
 def _board_table(board: dict[str, Any]) -> str:
@@ -154,8 +154,8 @@ def build_site(
     boards = rankings["leaderboards"]
     tabs = "".join(f'<a href="#{html.escape(key)}">{html.escape(board["label_zh"])}</a>' for key, board in boards.items())
     sections = "".join(f'<section id="{html.escape(key)}"><h2>{html.escape(board["label_zh"])}</h2>{_board_table(board)}</section>' for key, board in boards.items())
-    body = f'<div class="hero"><h1>AI PPT 动态评测榜</h1><p>聚合独立 benchmark、本地可复现评测和盲评证据；同时呈现分数、覆盖度与证据状态。</p></div><nav class="tabs">{tabs}</nav>{sections}'
-    (output / "index.html").write_text(_page("AI PPT 动态评测榜", body), encoding="utf-8")
+    body = f'<div class="hero"><h1>看见工具之外的真实能力</h1><p>DeckSignal 聚合独立 benchmark、可复现评测和盲评证据，呈现 AI 演示工具与方法的分数、覆盖度和证据状态。</p></div><nav class="tabs">{tabs}</nav>{sections}'
+    (output / "index.html").write_text(_page("AI 演示能力动态榜", body), encoding="utf-8")
     (output / "methods.html").write_text(_methods_page(latest_workflows), encoding="utf-8")
     research = {"as_of": "未提供", "entries": []}
     if research_path is not None:

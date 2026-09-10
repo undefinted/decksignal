@@ -3,13 +3,13 @@ requires = ["hatchling>=1.25"]
 build-backend = "hatchling.build"
 
 [project]
-name = "openpptbench"
+name = "decksignal"
 version = "0.2.0a1"
-description = "Continuous evaluation observatory and evidence-aware rankings for AI presentation tools"
+description = "Open presentation intelligence, evidence, and rankings for AI presentation tools"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "Apache-2.0" }
-authors = [{ name = "OpenPPTBench Contributors" }]
+authors = [{ name = "DeckSignal Contributors" }]
 dependencies = [
   "python-pptx>=1.0.2",
   "PyYAML>=6.0.2",
@@ -20,6 +20,7 @@ dependencies = [
 dev = ["pytest>=8.3", "ruff>=0.9"]
 
 [project.scripts]
+decksignal = "openpptbench.cli:main"
 openpptbench = "openpptbench.cli:main"
 
 [tool.hatch.build.targets.wheel]

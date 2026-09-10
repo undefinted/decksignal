@@ -2,7 +2,7 @@
 
 ## Why a simple weighted average is invalid
 
-Benchmarks differ in task, scale, evaluator, language, artifact format, and date. A score of 80 from one project is not automatically better than 75 from another. OpenPPTBench therefore stores native scores and constructs normalized evidence only within defensible comparison groups.
+Benchmarks differ in task, scale, evaluator, language, artifact format, and date. A score of 80 from one project is not automatically better than 75 from another. DeckSignal therefore stores native scores and constructs normalized evidence only within defensible comparison groups.
 
 ## Normalized observation
 
@@ -65,4 +65,3 @@ The index must display its weight profile. Users should be able to switch profil
 ## Pairwise arena
 
 Human preference is modeled separately using Bradley–Terry or another documented pairwise model. Arena ratings are not silently converted into rubric scores. They may contribute as one evidence family after minimum vote count, reviewer-quality checks, and uncertainty reporting.
-

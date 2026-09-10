@@ -27,7 +27,7 @@ def _write_json(data: object, output: str | None) -> None:
 
 
 def build_parser() -> argparse.ArgumentParser:
-    parser = argparse.ArgumentParser(prog="openpptbench")
+    parser = argparse.ArgumentParser(prog="decksignal")
     subparsers = parser.add_subparsers(dest="command", required=True)
 
     inspect_parser = subparsers.add_parser("inspect", help="Inspect a native PPTX artifact")
