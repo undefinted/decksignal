@@ -35,6 +35,7 @@ jobs:
           --workflows data/workflows
           --sources data/sources/catalog-v0.1.json
           --research data/research/landscape-v0.1.json
+          --benchmarks benchmark/sources/registry-v0.2.yaml
           --output-dir public/site
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3

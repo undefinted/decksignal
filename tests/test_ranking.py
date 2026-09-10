@@ -50,6 +50,8 @@ def test_ranking_requires_coverage_and_multiple_sources(tmp_path):
     assert row["rank"] == 1
     assert row["coverage"] == 1
     assert row["score"] == 82
+    assert result["benchmark_leaderboards"]["Local"]["rows"][0]["product"] == "Alpha"
+    assert result["benchmark_leaderboards"]["Upstream"]["rows"][0]["rank"] == 1
 
 
 def test_ranking_marks_partial_product_ineligible(tmp_path):

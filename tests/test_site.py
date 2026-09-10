@@ -34,14 +34,15 @@ def test_build_site_creates_index_and_product_pages(tmp_path):
     result = build_site(ranking_path, products_path, tmp_path / "site")
     repeated = build_site(ranking_path, products_path, tmp_path / "site")
 
-    assert result["pages"] == 4
-    assert repeated["pages"] == 4
+    assert result["pages"] == 5
+    assert repeated["pages"] == 5
     assert "DeckSignal" in (tmp_path / "site" / "index.html").read_text(
         encoding="utf-8"
     )
     assert (tmp_path / "site" / "alpha.html").exists()
     assert (tmp_path / "site" / "methods.html").exists()
     assert (tmp_path / "site" / "research.html").exists()
+    assert (tmp_path / "site" / "benchmarks.html").exists()
     parsed = json.loads((tmp_path / "site" / "rankings.json").read_text(encoding="utf-8"))
     assert parsed["leaderboards"]["overall"]["rows"][0]["rank"] == 1
 

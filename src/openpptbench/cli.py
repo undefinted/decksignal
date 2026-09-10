@@ -81,6 +81,7 @@ def build_parser() -> argparse.ArgumentParser:
     site_parser.add_argument("--workflows")
     site_parser.add_argument("--sources")
     site_parser.add_argument("--research")
+    site_parser.add_argument("--benchmarks")
     site_parser.add_argument("--output-dir", required=True)
 
     monitor_parser = subparsers.add_parser("check-products", help="Check product URL health")
@@ -170,6 +171,7 @@ def main(argv: list[str] | None = None) -> int:
                         workflows_path=args.workflows,
                         sources_path=args.sources,
                         research_path=args.research,
+                        benchmarks_path=args.benchmarks,
                 ),
                 None,
             )

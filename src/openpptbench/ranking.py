@@ -210,9 +210,65 @@ def build_rankings(
             "rows": rows,
         }
 
+    benchmark_leaderboards: dict[str, Any] = {}
+    evidence_by_source: dict[str, list[dict[str, Any]]] = defaultdict(list)
+    for evidence in evidence_records:
+        evidence_by_source[evidence["source"]["name"]].append(evidence)
+    for source_name, source_records in evidence_by_source.items():
+        grouped: dict[str, list[dict[str, Any]]] = defaultdict(list)
+        for evidence in source_records:
+            subject = evidence.get("subject")
+            snapshot_id = subject["snapshot_id"] if subject else evidence.get("product_snapshot_id")
+            if snapshot_id in current_snapshot_ids and snapshot_id in subjects:
+                grouped[snapshot_id].append(evidence)
+        rows = []
+        for snapshot_id, records in grouped.items():
+            by_capability: dict[str, list[tuple[float, float]]] = defaultdict(list)
+            for evidence in records:
+                normalized = evidence["observation"].get("normalized_score")
+                if normalized is None:
+                    continue
+                confidence = CONFIDENCE_WEIGHTS[evidence["provenance"]["confidence_class"]]
+                freshness = _freshness(
+                    evidence["provenance"]["observed_at"], as_of, evidence["source"]["type"]
+                )
+                quality = _sample_quality(evidence["observation"]["sample_size"])
+                by_capability[evidence["scope"]["capability"]].append(
+                    (float(normalized), confidence * freshness * quality)
+                )
+            capability_scores = {
+                capability: round(score, 3)
+                for capability, observations in by_capability.items()
+                if (score := _weighted_mean(observations)) is not None
+            }
+            weighted = [
+                (score, float(config["capabilities"].get(capability, {}).get("weight", 1)))
+                for capability, score in capability_scores.items()
+            ]
+            score = _weighted_mean(weighted)
+            subject_record = subjects[snapshot_id]
+            rows.append(
+                {
+                    "rank": None,
+                    "snapshot_id": snapshot_id,
+                    "subject_id": subject_record["subject_id"],
+                    "subject_kind": subject_record["subject_kind"],
+                    "product_id": subject_record["subject_id"],
+                    "product": subject_record["name"],
+                    "score": round(score, 3) if score is not None else None,
+                    "capabilities": capability_scores,
+                    "evidence_count": len(records),
+                }
+            )
+        rows.sort(key=lambda row: (-(row["score"] or -1), row["product"].lower()))
+        for rank, row in enumerate(rows, start=1):
+            row["rank"] = rank
+        benchmark_leaderboards[source_name] = {"label": source_name, "rows": rows}
+
     return {
         "schema_version": "0.2.0-draft",
         "generated_at": as_of.isoformat(),
         "method": "source-normalized, confidence-, freshness-, and coverage-aware aggregation",
         "leaderboards": results,
+        "benchmark_leaderboards": benchmark_leaderboards,
     }

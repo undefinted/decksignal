@@ -70,6 +70,7 @@ decksignal build-site public/rankings.json \
   --workflows data/workflows \
   --sources data/sources/catalog-v0.1.json \
   --research data/research/landscape-v0.1.json \
+  --benchmarks benchmark/sources/registry-v0.2.yaml \
   --output-dir public/site
 
 # Monitor registered products and discover open-source candidates
