@@ -13,7 +13,9 @@ benchmark scores remain explicitly pending until their adapters are run.
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
+import re
 import sys
 from datetime import datetime, timezone
 from pathlib import Path
@@ -44,18 +46,36 @@ def main() -> int:
         "runs": [],
     }
     failures = 0
+    seen_ids: set[str] = set()
     for manifest_path in manifests:
         errors = validate_path(manifest_path, schema)
         manifest = load_data(manifest_path)
+        if not isinstance(manifest, dict):
+            report["runs"].append({"status": "invalid_manifest", "validation_errors": errors})
+            failures += 1
+            continue
+        submission_id = manifest.get("submission_id", "")
+        if not isinstance(submission_id, str) or not re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_.-]*", submission_id):
+            errors.append({"message": "submission_id must be a safe filename identifier"})
+        elif submission_id in seen_ids:
+            errors.append({"message": "duplicate submission_id"})
+        seen_ids.add(str(submission_id))
+        if errors:
+            report["runs"].append({"status": "invalid_manifest", "validation_errors": errors})
+            failures += 1
+            continue
         artifact_path = manifest_path.parent / (manifest.get("artifact", {}).get("path") or "deck.pptx")
+        artifact_path = artifact_path.resolve()
+        if not artifact_path.is_relative_to(manifest_path.parent.resolve()):
+            errors.append({"message": "artifact path must stay within submission directory"})
         run: dict[str, object] = {
             "manifest": str(manifest_path.relative_to(ROOT)),
             "submission_id": manifest.get("submission_id"),
             "product": manifest.get("product", {}).get("name"),
             "task_id": manifest.get("task_id"),
-            "status": "ready" if not errors else "invalid_manifest",
+            "status": "inspection_pending" if not errors else "invalid_manifest",
             "validation_errors": errors,
-            "artifact": str(artifact_path.relative_to(ROOT)) if artifact_path.exists() else None,
+            "artifact": str(artifact_path.relative_to(ROOT)) if artifact_path.is_relative_to(ROOT) else None,
             "pending_layers": ["visual", "content", "editing", "operations"],
         }
         if errors:
@@ -64,6 +84,12 @@ def main() -> int:
             run["status"] = "missing_artifact"
             run["validation_errors"] = [{"message": "artifact file not found"}]
             failures += 1
+        elif hashlib.sha256(artifact_path.read_bytes()).hexdigest() != manifest["artifact"]["sha256"].lower():
+            run["status"] = "hash_mismatch"
+            failures += 1
+        elif artifact_path.suffix.lower().lstrip(".") != manifest["artifact"]["format"]:
+            run["status"] = "format_mismatch"
+            failures += 1
         elif artifact_path.suffix.lower() == ".pptx":
             metrics = inspect_pptx(artifact_path)
             metrics_path = output_root / f"{manifest['submission_id']}.metrics.json"
@@ -71,6 +97,7 @@ def main() -> int:
             metrics_path.write_text(json.dumps(metrics, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
             run["metrics"] = str(metrics_path.relative_to(ROOT))
             run["completed_layers"] = ["native_pptx_inspector"]
+            run["status"] = "native_inspected"
         else:
             run["status"] = "artifact_present_native_inspection_pending"
         report["runs"].append(run)  # type: ignore[union-attr]
