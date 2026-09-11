@@ -45,6 +45,15 @@ This produces six decks—enough to discover broken fields, ambiguous rubric lan
 5. Blind product identity and randomize order for comparison.
 6. Record redistribution restrictions.
 
+## Local intake command
+
+Drop manifests and artifacts under `submissions/pilot/<product>/<task>/`, then
+run `.venv/Scripts/python.exe scripts/run_pilot.py` (or `python` after
+installing the project dependencies). This validates every manifest and writes
+native PPTX inspection metrics to `results/raw/pilot/`. The command is a
+readiness check, not a score generator: missing external benchmark layers are
+reported as pending and cannot enter a leaderboard.
+
 ## Pilot exit criteria
 
 Do not expand beyond the pilot until:
@@ -54,4 +63,3 @@ Do not expand beyond the pilot until:
 - two independent reviewers can use the rubric without clarification;
 - obvious failures appear in raw measurements or task-specific checks;
 - the results can be regenerated from committed manifests and score records.
-
