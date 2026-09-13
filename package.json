@@ -25,5 +25,8 @@
   "homepage": "https://github.com/undefinted/decksignal#readme",
   "dependencies": {
     "pptxgenjs": "^4.0.1"
+  },
+  "devDependencies": {
+    "@marp-team/marp-cli": "^4.5.1"
   }
 }
