@@ -16,3 +16,5 @@ results/leaderboard/*
 public/
 monitoring-output/
 work/
+node_modules/
+presenton-pull.*
